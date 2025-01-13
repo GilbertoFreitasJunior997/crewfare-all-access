@@ -12,10 +12,14 @@ const variants = cva("rounded-lg font-bold bg-primary transition-colors", {
       default: "h-12 px-[42px]",
       icon: "size-12 flex items-center justify-center",
     },
+    disabled: {
+      true: "opacity-50",
+    },
   },
   defaultVariants: {
     variant: "primary",
     size: "default",
+    disabled: false,
   },
 });
 
@@ -30,10 +34,12 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps) => {
+  const { disabled } = props;
+
   return (
     <button
       type="button"
-      className={twMerge(variants({ variant, size, className }))}
+      className={twMerge(variants({ variant, size, disabled, className }))}
       {...props}
     >
       {children}
