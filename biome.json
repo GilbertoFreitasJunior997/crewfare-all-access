@@ -51,6 +51,9 @@
 				"noExplicitAny": "error",
 				"noRedundantUseStrict": "error",
 				"noShadowRestrictedNames": "error"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off"
 			}
 		}
 	},

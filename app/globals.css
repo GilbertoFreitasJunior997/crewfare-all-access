@@ -3,19 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: 249 100% 57%;
+  --secondary: 240 2% 19%;
+  --background: 240 3% 12%;
+  --background-accent: 240 5% 8%;
+  --foreground: 0 0% 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+@layer base {
+  body {
+    font-family: Poppins, Helvetica, sans-serif;
+    @apply antialiased bg-background text-foreground;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Poppins, Helvetica, sans-serif;
 }

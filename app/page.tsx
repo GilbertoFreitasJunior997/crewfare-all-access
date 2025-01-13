@@ -1,3 +1,5 @@
 export default function Home() {
-  return <div>Basic Information</div>;
+  return (
+    <div className="min-h-screen w-screen grid place-content-center">Tests</div>
+  );
 }
