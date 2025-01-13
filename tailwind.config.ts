@@ -16,8 +16,9 @@ export default {
         foreground: "hsl(var(--foreground))",
         border: "hsl(var(--border))",
         placeholder: "hsl(var(--placeholder))",
+        accent: "hsl(var(--accent))",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;
