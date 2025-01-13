@@ -1,12 +1,10 @@
-import { ButtonNext } from "@/components/molecules/button-next";
-import { ButtonPrevious } from "@/components/molecules/button-previous";
+import { TextInput } from "@/components/atoms/text-input";
 
 export default function Home() {
   return (
     <div className="min-h-screen w-screen grid place-content-center">
-      <div className="flex gap-4">
-        <ButtonPrevious disabled={true} />
-        <ButtonNext />
+      <div className="space-y-2">
+        <TextInput placeholder="Type here" />
       </div>
     </div>
   );
