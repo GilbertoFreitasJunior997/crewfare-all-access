@@ -13,7 +13,10 @@ export default function Home() {
             { label: "Other Event", value: "c" },
           ]}
         />
-        <NumberInput className="col-span-2" />
+        <NumberInput
+          className="col-span-2"
+          placeholder="Type here"
+        />
       </div>
     </div>
   );

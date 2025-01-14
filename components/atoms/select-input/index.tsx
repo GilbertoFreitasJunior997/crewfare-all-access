@@ -33,7 +33,7 @@ export const SelectInput = ({ items, className }: SelectInputProps) => {
       <SelectPrimitive.Trigger
         className={twMerge(
           inputContainerClassName,
-          "flex items-center justify-between whitespace-nowrap [&>span]:line-clamp-1 font-medium data-[state=open]:border-border",
+          "flex items-center justify-between whitespace-nowrap [&>span]:line-clamp-1 font-medium data-[state=open]:border-border text-placeholder",
           className,
         )}
       >
