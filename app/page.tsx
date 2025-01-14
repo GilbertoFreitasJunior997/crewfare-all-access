@@ -1,5 +1,5 @@
+import { NumberInput } from "@/components/atoms/number-input";
 import { SelectInput } from "@/components/atoms/select-input";
-import { TextInput } from "@/components/atoms/text-input";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
             { label: "Other Event", value: "c" },
           ]}
         />
-        <TextInput className="col-span-2" />
+        <NumberInput className="col-span-2" />
       </div>
     </div>
   );

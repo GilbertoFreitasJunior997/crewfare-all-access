@@ -21,7 +21,7 @@ export const NumberInput = ({ className, ...props }: NumberInputProps) => {
           className="size-4"
           tabIndex={-1}
         >
-          <ChevronUpIcon className="size-4" />
+          <ChevronUpIcon className="size-4 text-accent" />
         </button>
         <button
           type="button"
@@ -29,7 +29,7 @@ export const NumberInput = ({ className, ...props }: NumberInputProps) => {
           className="size-4"
           tabIndex={-1}
         >
-          <ChevronDownIcon className="size-4" />
+          <ChevronDownIcon className="size-4 text-accent" />
         </button>
       </div>
     </div>
