@@ -5,7 +5,7 @@ import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-geist-sans",
-  weight: ["200", "400", "500", "700", "900"],
+  weight: ["200", "400", "500", "600", "700", "900"],
 });
 
 export const metadata: Metadata = {
