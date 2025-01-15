@@ -4,8 +4,8 @@ import { Button } from "@/components/atoms/button";
 import { FormProvider } from "@/components/atoms/form-provider";
 import { StepperProvider } from "@/components/atoms/stepper-provider";
 import { Header } from "@/components/molecules/header";
+import { NumberInput } from "@/components/molecules/number-input";
 import { Stepper } from "@/components/molecules/stepper";
-import { TextInput } from "@/components/molecules/text-input";
 import { useForm } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
@@ -47,7 +47,7 @@ export default function Home() {
           <main className="h-fit p-5 grid grid-cols-2 gap-6">
             <form onSubmit={handleSubmit(handleSuccess)}>
               <FormProvider form={form}>
-                <TextInput name="NameWithForm" />
+                <NumberInput name="DaysWithForm" />
 
                 <SampleDisplay />
               </FormProvider>
@@ -55,7 +55,7 @@ export default function Home() {
               <Button type="submit"> Submit </Button>
             </form>
 
-            <TextInput name="Name" />
+            <NumberInput name="Days" />
           </main>
         </div>
       </div>

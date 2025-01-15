@@ -23,7 +23,8 @@ export const TextInput = memo(({ className, ...props }: TextInputProps) => (
       const { name } = props;
 
       const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.value);
+        const newValue = e.target.value;
+        onChange(newValue);
       };
 
       return (
@@ -31,6 +32,7 @@ export const TextInput = memo(({ className, ...props }: TextInputProps) => (
           <InputLabel />
 
           <input
+            id={name}
             name={name}
             className={inputBoxClassName}
             value={value}
