@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, createContext, useCallback, useState } from "react";
 
 export type Step = {
   name: string;
@@ -28,18 +28,18 @@ export const StepperProvider = ({ steps, children }: StepperProviderProps) => {
   const hasNextStep = currentStepIndex < steps.length - 1;
   const hasPreviousStep = currentStepIndex > 0;
 
-  const goToStep = (step: Step) => {
+  const goToStep = useCallback((step: Step) => {
     setCurrentStep(step);
-  };
+  }, []);
 
-  const goToNextStep = () => {
+  const goToNextStep = useCallback(() => {
     if (!hasNextStep) {
       return;
     }
 
     const nextStep = steps[currentStepIndex + 1];
     setCurrentStep(nextStep);
-  };
+  }, [steps, currentStepIndex, hasNextStep]);
 
   const goToPreviousStep = () => {
     if (!hasPreviousStep) {

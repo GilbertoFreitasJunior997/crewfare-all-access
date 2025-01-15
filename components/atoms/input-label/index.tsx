@@ -1,13 +1,14 @@
 "use client";
 
 import { useInput } from "@/hooks/use-input";
+import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type InputLabelProps = {
   className?: string;
 };
 
-export const InputLabel = ({ className }: InputLabelProps) => {
+export const InputLabel = memo(({ className }: InputLabelProps) => {
   const { name, label } = useInput();
 
   return (
@@ -18,4 +19,4 @@ export const InputLabel = ({ className }: InputLabelProps) => {
       {label ?? name}
     </label>
   );
-};
+});

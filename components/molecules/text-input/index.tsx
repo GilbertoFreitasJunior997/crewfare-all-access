@@ -3,7 +3,7 @@
 import { InputContainer } from "@/components/atoms/input-container";
 import { InputLabel } from "@/components/atoms/input-label";
 import { InputBase, InputProvider } from "@/components/atoms/input-provider";
-import { ChangeEvent } from "react";
+import { ChangeEvent, memo } from "react";
 import { twMerge } from "tailwind-merge";
 
 export const inputBoxClassName = twMerge(
@@ -14,7 +14,7 @@ export type TextInputProps = InputBase<string> & {
   className?: string;
 };
 
-export const TextInput = ({ className, ...props }: TextInputProps) => (
+export const TextInput = memo(({ className, ...props }: TextInputProps) => (
   <InputProvider
     {...props}
     emptyValue=""
@@ -40,4 +40,4 @@ export const TextInput = ({ className, ...props }: TextInputProps) => (
       );
     }}
   </InputProvider>
-);
+));

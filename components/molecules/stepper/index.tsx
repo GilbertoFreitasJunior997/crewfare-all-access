@@ -3,14 +3,14 @@
 import { StepItem } from "@/components/atoms/step-item";
 import { useStepper } from "@/hooks/use-stepper";
 import { MenuIcon } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type StepperProps = {
   title: string;
 };
 
-export const Stepper = ({ title }: StepperProps) => {
+export const Stepper = memo(({ title }: StepperProps) => {
   const { steps, currentStep, goToStep } = useStepper();
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -56,4 +56,4 @@ export const Stepper = ({ title }: StepperProps) => {
       </nav>
     </aside>
   );
-};
+});
