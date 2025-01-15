@@ -2,10 +2,13 @@ import { BannerInput } from "@/components/atoms/banner-input";
 import { CheckboxInput } from "@/components/atoms/checkbox-input";
 import { DateRangeInput } from "@/components/atoms/date-range-input";
 import { SelectInput } from "@/components/atoms/select-input";
+import { Header } from "@/components/molecules/header";
 
 export default function Home() {
   return (
     <div className="min-h-screen w-screen px-4 flex flex-col items-center justify-center">
+      <Header />
+
       <div className="grid grid-cols-4 gap-2 w-full">
         <SelectInput
           className="col-span-2"
