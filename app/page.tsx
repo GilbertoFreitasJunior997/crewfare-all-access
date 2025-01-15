@@ -1,9 +1,9 @@
-import { BannerInput } from "@/components/atoms/banner-input";
-import { CheckboxInput } from "@/components/atoms/checkbox-input";
-import { DateRangeInput } from "@/components/atoms/date-range-input";
-import { SelectInput } from "@/components/atoms/select-input";
 import { Step, StepperProvider } from "@/components/atoms/stepper-provider";
+import { BannerInput } from "@/components/molecules/banner-input";
+import { CheckboxInput } from "@/components/molecules/checkbox-input";
+import { DateRangeInput } from "@/components/molecules/date-range-input";
 import { Header } from "@/components/molecules/header";
+import { SelectInput } from "@/components/molecules/select-input";
 import { Stepper } from "@/components/molecules/stepper";
 
 const steps: Step[] = [

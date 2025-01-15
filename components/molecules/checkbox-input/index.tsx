@@ -1,7 +1,7 @@
+import { CheckIcon } from "@/components/atoms/check-icon";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { useId } from "react";
 import { twMerge } from "tailwind-merge";
-import { CheckIcon } from "../check-icon";
 
 export type CheckboxInputProps = CheckboxPrimitive.CheckboxProps;
 

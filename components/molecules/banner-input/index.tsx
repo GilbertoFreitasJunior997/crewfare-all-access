@@ -1,8 +1,8 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { DropIndicatorIcon } from "../drop-indicator-icon";
 import "./styles.css";
+import { DropIndicatorIcon } from "@/components/atoms/drop-indicator-icon";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 

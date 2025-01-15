@@ -1,14 +1,14 @@
 "use client";
 
+import { Button } from "@/components/atoms/button";
+import { Calendar } from "@/components/atoms/calendar";
+import { Popover } from "@/components/atoms/popover";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
-import { Button } from "../button";
-import { Calendar } from "../calendar";
-import { Popover } from "../popover";
-import { inputContainerClassName } from "../text-input";
+import { inputContainerClassName } from "../../molecules/text-input";
 
 export type DateRangeInputProps = {
   className?: string;

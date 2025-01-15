@@ -1,7 +1,7 @@
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { twMerge } from "tailwind-merge";
-import { inputContainerClassName } from "../text-input";
+import { inputContainerClassName } from "../../molecules/text-input";
 
 export type SelectInputItem = {
   label: string;
