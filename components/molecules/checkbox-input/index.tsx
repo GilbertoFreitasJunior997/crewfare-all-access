@@ -17,13 +17,23 @@ export const CheckboxInput = memo(
       {({ value, onChange }) => {
         const { name } = props;
 
+        const handleChange = (checked: CheckboxPrimitive.CheckedState) => {
+          let newValue = !!checked;
+
+          if (typeof checked === "string") {
+            newValue = false;
+          }
+
+          onChange(newValue);
+        };
+
         return (
           <div className={twMerge("flex items-center", className)}>
             <CheckboxPrimitive.Root
               id={name}
               name={name}
               checked={value}
-              onCheckedChange={onChange}
+              onCheckedChange={handleChange}
               className="size-[18px] border border-[#A3A3A3] rounded-[4px] data-[state=checked]:border-accent data-[state=checked]:bg-accent transition-colors duration-75"
             >
               <CheckboxPrimitive.Indicator className="flex items-center justify-center">

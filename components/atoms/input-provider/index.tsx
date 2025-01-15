@@ -21,7 +21,7 @@ export type InputBase<T> = InputContextValue & {
 // props passed to the children render of the HOC
 export type InputProviderRenderProps<T> = {
   value: T | undefined;
-  onChange: (oldValue: T) => void;
+  onChange: (oldValue: T | undefined) => void;
 };
 
 export type InputProviderProps<T> = InputBase<T> & {
@@ -38,8 +38,8 @@ export const InputProvider = <T,>({
 }: InputProviderProps<T>) => {
   const { form } = useFormProvider();
 
-  const handleChange = (newValue: T) => {
-    onChange?.(newValue);
+  const handleChange = (newValue: T | undefined) => {
+    onChange?.(newValue as T);
     form?.setValue(name, newValue);
   };
 
