@@ -1,5 +1,6 @@
 import { BannerInput } from "@/components/atoms/banner-input";
 import { CheckboxInput } from "@/components/atoms/checkbox-input";
+import { DateRangeInput } from "@/components/atoms/date-range-input";
 import { SelectInput } from "@/components/atoms/select-input";
 
 export default function Home() {
@@ -16,6 +17,8 @@ export default function Home() {
         />
 
         <CheckboxInput>Overlay Title on Banner</CheckboxInput>
+
+        <DateRangeInput className="col-span-4" />
 
         <BannerInput className="col-span-4" />
       </div>
