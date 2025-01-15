@@ -9,6 +9,10 @@ export type Step = {
 export type StepperContextValue = {
   currentStep: Step;
   steps: Step[];
+  hasNextStep: boolean;
+  hasPreviousStep: boolean;
+  goToNextStep: () => void;
+  goToPreviousStep: () => void;
   goToStep: (step: Step) => void;
 };
 export const StepperContext = createContext({} as StepperContextValue);
@@ -20,8 +24,30 @@ export type StepperProviderProps = PropsWithChildren & {
 export const StepperProvider = ({ steps, children }: StepperProviderProps) => {
   const [currentStep, setCurrentStep] = useState(steps[0]);
 
+  const currentStepIndex = steps.indexOf(currentStep);
+  const hasNextStep = currentStepIndex < steps.length - 1;
+  const hasPreviousStep = currentStepIndex > 0;
+
   const goToStep = (step: Step) => {
     setCurrentStep(step);
+  };
+
+  const goToNextStep = () => {
+    if (!hasNextStep) {
+      return;
+    }
+
+    const nextStep = steps[currentStepIndex + 1];
+    setCurrentStep(nextStep);
+  };
+
+  const goToPreviousStep = () => {
+    if (!hasPreviousStep) {
+      return;
+    }
+
+    const previousStep = steps[currentStepIndex - 1];
+    setCurrentStep(previousStep);
   };
 
   return (
@@ -29,6 +55,10 @@ export const StepperProvider = ({ steps, children }: StepperProviderProps) => {
       value={{
         currentStep,
         steps,
+        hasNextStep,
+        hasPreviousStep,
+        goToNextStep,
+        goToPreviousStep,
         goToStep,
       }}
     >

@@ -1,8 +1,11 @@
+"use client";
+
 import { ArrowLeftIcon } from "@/components/atoms/arrow-left-icon";
 import { ArrowRightIcon } from "@/components/atoms/arrow-right-icon";
 import { Button } from "@/components/atoms/button";
 import { StepProvider } from "@/components/atoms/step-provider";
 import { Step } from "@/components/atoms/stepper-provider";
+import { useStepper } from "@/hooks/use-stepper";
 import { PropsWithChildren } from "react";
 
 export type StepContentProps = PropsWithChildren & {
@@ -11,6 +14,8 @@ export type StepContentProps = PropsWithChildren & {
 
 export const StepContent = ({ step, children }: StepContentProps) => {
   const { name } = step;
+  const { hasNextStep, hasPreviousStep, goToNextStep, goToPreviousStep } =
+    useStepper();
 
   return (
     <StepProvider step={step}>
@@ -23,12 +28,16 @@ export const StepContent = ({ step, children }: StepContentProps) => {
           <Button
             variant="secondary"
             size="icon"
+            disabled={!hasPreviousStep}
+            onClick={goToPreviousStep}
           >
             <ArrowLeftIcon />
           </Button>
           <Button
             variant="secondary"
             size="icon"
+            disabled={!hasNextStep}
+            onClick={goToNextStep}
           >
             <ArrowRightIcon />
           </Button>
