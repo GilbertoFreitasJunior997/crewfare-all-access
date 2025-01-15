@@ -1,17 +1,24 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
 import "./styles.css";
 import { DropIndicatorIcon } from "@/components/atoms/drop-indicator-icon";
-import { useState } from "react";
+import { InputContainer } from "@/components/atoms/input-container";
+import { InputLabel } from "@/components/atoms/input-label";
+import {
+  InputBase,
+  InputProvider,
+  InputProviderRenderProps,
+} from "@/components/atoms/input-provider";
+import { memo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-export type BannerInputProps = {
-  text?: string;
-  className?: string;
-};
-
-export const BannerInput = ({ className, text }: BannerInputProps) => {
+// inner is extracted so it can use hooks at top level
+const Inner = ({
+  name,
+  text,
+  className,
+  onChange,
+}: InputProviderRenderProps<File | null> & BannerInputProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
 
   const handleFileAccepted = (files: File[]) => {
@@ -24,6 +31,8 @@ export const BannerInput = ({ className, text }: BannerInputProps) => {
       // @TODO toast "incorrect file type"
       return;
     }
+
+    onChange(file);
 
     const reader = new FileReader();
     reader.onloadend = (e) => {
@@ -46,35 +55,58 @@ export const BannerInput = ({ className, text }: BannerInputProps) => {
   });
 
   return (
-    <button
-      type="button"
-      className={twMerge(
-        "flex justify-center items-center w-full h-[244px] rounded-2xl select-none cursor-pointer bg-secondary banner-input-dashed-border bg-cover bg-no-repeat bg-center",
-        className,
-      )}
-      {...getRootProps()}
-      style={{
-        backgroundImage: imageUrl ? `url(${imageUrl})` : undefined,
-      }}
-    >
-      <input {...getInputProps()} />
+    <InputContainer className={className}>
+      <InputLabel />
 
-      <div className="w-full flex flex-col gap-3 items-center justify-center">
-        {imageUrl ? (
-          <span className="font-bold text-5xl"> {text ?? ""} </span>
-        ) : (
-          <>
-            <DropIndicatorIcon />
-            <div className="flex items-center flex-row gap-0.5 font-semibold">
-              {isDragActive ? (
-                <>Drop your files here!</>
-              ) : (
-                <>Click or drop image</>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-    </button>
+      <button
+        type="button"
+        className="flex justify-center items-center w-full h-[244px] rounded-2xl select-none cursor-pointer bg-secondary banner-input-dashed-border bg-cover bg-no-repeat bg-center"
+        {...getRootProps()}
+        style={{
+          backgroundImage: imageUrl ? `url(${imageUrl})` : undefined,
+        }}
+      >
+        <input
+          id={name}
+          name={name}
+          {...getInputProps()}
+        />
+
+        <div className="w-full flex flex-col gap-3 items-center justify-center">
+          {imageUrl ? (
+            <span className="font-bold text-5xl"> {text ?? ""} </span>
+          ) : (
+            <>
+              <DropIndicatorIcon />
+              <div className="flex items-center flex-row gap-0.5 font-semibold">
+                {isDragActive ? (
+                  <>Drop your files here!</>
+                ) : (
+                  <>Click or drop image</>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </button>
+    </InputContainer>
   );
 };
+
+export type BannerInputProps = InputBase<File | null> & {
+  className?: string;
+  text?: string;
+};
+export const BannerInput = memo((props: BannerInputProps) => (
+  <InputProvider
+    {...props}
+    emptyValue={null}
+  >
+    {(providerProps) => (
+      <Inner
+        {...props}
+        {...providerProps}
+      />
+    )}
+  </InputProvider>
+));

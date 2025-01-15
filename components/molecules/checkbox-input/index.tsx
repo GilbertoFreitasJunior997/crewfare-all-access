@@ -1,40 +1,40 @@
 import { CheckIcon } from "@/components/atoms/check-icon";
+import { InputLabel } from "@/components/atoms/input-label";
+import { InputBase, InputProvider } from "@/components/atoms/input-provider";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { useId } from "react";
+import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
-export type CheckboxInputProps = CheckboxPrimitive.CheckboxProps;
-
-export const CheckboxInput = ({
-  className,
-  children,
-  ...props
-}: CheckboxInputProps) => {
-  const { id: outerId } = props;
-  const innerId = useId();
-
-  const id = outerId ?? innerId;
-
-  return (
-    <div className={twMerge("flex items-center", className)}>
-      <CheckboxPrimitive.Root
-        className={
-          "size-[18px] border border-[#A3A3A3] rounded-[4px] data-[state=checked]:border-accent data-[state=checked]:bg-accent transition-colors duration-75"
-        }
-        id={id}
-        {...props}
-      >
-        <CheckboxPrimitive.Indicator className="flex items-center justify-center">
-          <CheckIcon />
-        </CheckboxPrimitive.Indicator>
-      </CheckboxPrimitive.Root>
-
-      <label
-        className="pl-[11px] text-sm select-none cursor-pointer"
-        htmlFor={id}
-      >
-        {children}
-      </label>
-    </div>
-  );
+export type CheckboxInputProps = InputBase<boolean> & {
+  className?: string;
 };
+export const CheckboxInput = memo(
+  ({ className, ...props }: CheckboxInputProps) => (
+    <InputProvider
+      {...props}
+      emptyValue={false}
+    >
+      {({ value, onChange }) => {
+        const { name } = props;
+
+        return (
+          <div className={twMerge("flex items-center", className)}>
+            <CheckboxPrimitive.Root
+              id={name}
+              name={name}
+              checked={value}
+              onCheckedChange={onChange}
+              className="size-[18px] border border-[#A3A3A3] rounded-[4px] data-[state=checked]:border-accent data-[state=checked]:bg-accent transition-colors duration-75"
+            >
+              <CheckboxPrimitive.Indicator className="flex items-center justify-center">
+                <CheckIcon />
+              </CheckboxPrimitive.Indicator>
+            </CheckboxPrimitive.Root>
+
+            <InputLabel className="pl-[11px] mb-0" />
+          </div>
+        );
+      }}
+    </InputProvider>
+  ),
+);
