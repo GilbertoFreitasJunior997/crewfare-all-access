@@ -1,18 +1,14 @@
 "use client";
 
 import { format } from "date-fns";
-import {
-  CalendarDaysIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "lucide-react";
+import { CalendarDaysIcon } from "lucide-react";
 import { useState } from "react";
-import { DateRange, DayPicker } from "react-day-picker";
+import { DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 import { Button } from "../button";
+import { Calendar } from "../calendar";
 import { Popover } from "../popover";
 import { inputContainerClassName } from "../text-input";
-import { dateRangeInputClassNames } from "./consts";
 
 export type DateRangeInputProps = {
   className?: string;
@@ -53,28 +49,12 @@ export const DateRangeInput = ({ className }: DateRangeInputProps) => {
       </Popover.Trigger>
 
       <Popover.Content>
-        <DayPicker
-          autoFocus={true}
+        <Calendar
           defaultMonth={date?.from}
           selected={date}
           onSelect={setDate}
           numberOfMonths={2}
-          showOutsideDays={true}
-          className="p-3"
-          classNames={dateRangeInputClassNames}
           mode="range"
-          components={{
-            NextMonthButton: (props) => (
-              <button {...props}>
-                <ChevronRightIcon className="size-4" />
-              </button>
-            ),
-            PreviousMonthButton: (props) => (
-              <button {...props}>
-                <ChevronLeftIcon className="size-4" />
-              </button>
-            ),
-          }}
         />
       </Popover.Content>
     </Popover.Root>
