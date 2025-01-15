@@ -3,12 +3,14 @@
 import { Button } from "@/components/atoms/button";
 import { FormProvider } from "@/components/atoms/form-provider";
 import { StepperProvider } from "@/components/atoms/stepper-provider";
-import { CheckboxInput } from "@/components/molecules/checkbox-input";
+import { DateRangeInput } from "@/components/molecules/date-range-input";
 import { Header } from "@/components/molecules/header";
 import { Stepper } from "@/components/molecules/stepper";
 import { useForm } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
+import { useState } from "react";
+import { DateRange } from "react-day-picker";
 
 const SampleDisplay = () => {
   const { form } = useFormProvider();
@@ -36,6 +38,8 @@ export default function Home() {
     console.info(values);
   };
 
+  const [range, setRange] = useState<DateRange | undefined>();
+
   return (
     <StepperProvider steps={steps}>
       <div className="min-h-screen w-screen flex flex-col">
@@ -47,7 +51,7 @@ export default function Home() {
           <main className="h-fit p-5 grid grid-cols-2 gap-6">
             <form onSubmit={handleSubmit(handleSuccess)}>
               <FormProvider form={form}>
-                <CheckboxInput name="CheckboxWithForm" />
+                <DateRangeInput name="CheckboxWithForm" />
 
                 <SampleDisplay />
               </FormProvider>
@@ -55,7 +59,11 @@ export default function Home() {
               <Button type="submit"> Submit </Button>
             </form>
 
-            <CheckboxInput name="Checkbox" />
+            <DateRangeInput
+              name="Checkbox"
+              value={range}
+              onChange={setRange}
+            />
           </main>
         </div>
       </div>

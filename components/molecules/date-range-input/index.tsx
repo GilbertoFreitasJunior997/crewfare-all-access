@@ -2,57 +2,91 @@
 
 import { Button } from "@/components/atoms/button";
 import { Calendar } from "@/components/atoms/calendar";
+import { InputContainer } from "@/components/atoms/input-container";
+import { InputLabel } from "@/components/atoms/input-label";
+import {
+  InputBase,
+  InputProvider,
+  InputProviderRenderProps,
+} from "@/components/atoms/input-provider";
 import { Popover } from "@/components/atoms/popover";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
-import { useState } from "react";
+import { ElementRef, memo, useRef } from "react";
 import { DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 import { inputBoxClassName } from "../../molecules/text-input";
 
-export type DateRangeInputProps = {
-  className?: string;
-};
+// inner is extracted so it can use hooks at top level
+const Inner = ({
+  value,
+  onChange,
+  className,
+}: DateRangeInputProps & InputProviderRenderProps<DateRange | undefined>) => {
+  const triggerRef = useRef<ElementRef<typeof Popover.Trigger>>(null);
 
-export const DateRangeInput = ({ className }: DateRangeInputProps) => {
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(2025, 0, 15),
-    to: new Date(2025, 0, 20),
-  });
+  const handleLabelClick = () => {
+    triggerRef.current?.click();
+  };
 
   const formatDisplayDate = (date?: Date) =>
     date ? format(date, "MM/dd/y") : undefined;
-  const formattedFrom = formatDisplayDate(date?.from);
-  const formattedTo = formatDisplayDate(date?.to);
+
+  const formattedFrom = formatDisplayDate(value?.from);
+  const formattedTo = formatDisplayDate(value?.to);
 
   return (
-    <Popover.Root>
-      <Popover.Trigger asChild={true}>
-        <Button
-          variant="secondary"
-          className={twMerge(inputBoxClassName, "justify-between", className)}
+    <InputContainer className={twMerge("relative", className)}>
+      <InputLabel onClick={handleLabelClick} />
+
+      <Popover.Root>
+        <Popover.Trigger
+          ref={triggerRef}
+          asChild={true}
         >
-          {date ? (
-            <>
-              {formattedFrom} - {formattedTo}
-            </>
-          ) : (
-            <span>Pick a date</span>
-          )}
+          <Button
+            variant="secondary"
+            className={twMerge(inputBoxClassName, "justify-between")}
+          >
+            {value ? (
+              <>
+                {formattedFrom} - {formattedTo}
+              </>
+            ) : (
+              <span>Pick a date</span>
+            )}
 
-          <CalendarDaysIcon className="text-accent" />
-        </Button>
-      </Popover.Trigger>
+            <CalendarDaysIcon className="text-accent" />
+          </Button>
+        </Popover.Trigger>
 
-      <Popover.Content>
-        <Calendar
-          defaultMonth={date?.from}
-          selected={date}
-          onSelect={setDate}
-          numberOfMonths={2}
-          mode="range"
-        />
-      </Popover.Content>
-    </Popover.Root>
+        <Popover.Content>
+          <Calendar
+            defaultMonth={value?.from}
+            selected={value}
+            onSelect={onChange}
+            numberOfMonths={2}
+            mode="range"
+          />
+        </Popover.Content>
+      </Popover.Root>
+    </InputContainer>
   );
 };
+
+export type DateRangeInputProps = InputBase<DateRange | undefined> & {
+  className?: string;
+};
+export const DateRangeInput = memo((props: DateRangeInputProps) => (
+  <InputProvider
+    {...props}
+    emptyValue={undefined}
+  >
+    {(providerProps) => (
+      <Inner
+        {...props}
+        {...providerProps}
+      />
+    )}
+  </InputProvider>
+));
