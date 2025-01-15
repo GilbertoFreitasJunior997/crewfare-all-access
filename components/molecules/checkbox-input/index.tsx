@@ -16,12 +16,11 @@ export const CheckboxInput = ({
   const id = outerId ?? innerId;
 
   return (
-    <div className="col-span-2 flex items-center">
+    <div className={twMerge("flex items-center", className)}>
       <CheckboxPrimitive.Root
-        className={twMerge(
-          "size-[18px] border border-[#A3A3A3] rounded-[4px] data-[state=checked]:border-accent data-[state=checked]:bg-accent transition-colors duration-75",
-          className,
-        )}
+        className={
+          "size-[18px] border border-[#A3A3A3] rounded-[4px] data-[state=checked]:border-accent data-[state=checked]:bg-accent transition-colors duration-75"
+        }
         id={id}
         {...props}
       >

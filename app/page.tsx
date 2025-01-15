@@ -1,12 +1,9 @@
 import { Step, StepperProvider } from "@/components/atoms/stepper-provider";
-import { BannerInput } from "@/components/molecules/banner-input";
-import { CheckboxInput } from "@/components/molecules/checkbox-input";
-import { DateRangeInput } from "@/components/molecules/date-range-input";
 import { Header } from "@/components/molecules/header";
-import { SelectInput } from "@/components/molecules/select-input";
 import { Stepper } from "@/components/molecules/stepper";
+import { BasicInformationStep } from "@/components/templates/basic-information-step";
 
-const steps: Step[] = [
+export const steps: Step[] = [
   {
     name: "Basic Information",
   },
@@ -27,23 +24,8 @@ export default function Home() {
         <div className="grow w-full md:grid md:grid-cols-[248px_1fr]">
           <Stepper title="Create Event" />
 
-          <main className="h-full">
-            <div className="grid grid-cols-4 gap-2 w-full mt-4 md:mt-12 px-3">
-              <SelectInput
-                className="col-span-2"
-                items={[
-                  { label: "Public Event", value: "a" },
-                  { label: "Private Event", value: "b" },
-                  { label: "Other Event", value: "c" },
-                ]}
-              />
-
-              <CheckboxInput>Overlay Title on Banner</CheckboxInput>
-
-              <DateRangeInput className="col-span-4" />
-
-              <BannerInput className="col-span-4" />
-            </div>
+          <main className="h-full p-5">
+            <BasicInformationStep />
           </main>
         </div>
       </div>
