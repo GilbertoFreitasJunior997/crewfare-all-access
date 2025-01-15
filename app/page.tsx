@@ -2,24 +2,13 @@
 
 import { Button } from "@/components/atoms/button";
 import { FormProvider } from "@/components/atoms/form-provider";
-import { Step, StepperProvider } from "@/components/atoms/stepper-provider";
+import { StepperProvider } from "@/components/atoms/stepper-provider";
 import { Header } from "@/components/molecules/header";
 import { Stepper } from "@/components/molecules/stepper";
 import { TextInput } from "@/components/molecules/text-input";
 import { useForm } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
-
-export const steps: Step[] = [
-  {
-    name: "Basic Information",
-  },
-  {
-    name: "Details",
-  },
-  {
-    name: "Dates",
-  },
-];
+import { steps } from "@/lib/steps";
 
 const SampleDisplay = () => {
   const { form } = useFormProvider();
