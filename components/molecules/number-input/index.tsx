@@ -1,7 +1,7 @@
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { InputHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
-import { inputContainerClassName } from "../text-input";
+import { inputBoxClassName } from "../text-input";
 
 export type NumberInputProps = InputHTMLAttributes<HTMLInputElement>;
 
@@ -9,7 +9,7 @@ export const NumberInput = ({ className, ...props }: NumberInputProps) => {
   return (
     <div className={twMerge("w-full relative", className)}>
       <input
-        className={twMerge(inputContainerClassName, "appearance-none pr-9")}
+        className={twMerge(inputBoxClassName, "appearance-none pr-9")}
         type="number"
         {...props}
       />

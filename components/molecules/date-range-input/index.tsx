@@ -8,7 +8,7 @@ import { CalendarDaysIcon } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
-import { inputContainerClassName } from "../../molecules/text-input";
+import { inputBoxClassName } from "../../molecules/text-input";
 
 export type DateRangeInputProps = {
   className?: string;
@@ -30,11 +30,7 @@ export const DateRangeInput = ({ className }: DateRangeInputProps) => {
       <Popover.Trigger asChild={true}>
         <Button
           variant="secondary"
-          className={twMerge(
-            inputContainerClassName,
-            "justify-between",
-            className,
-          )}
+          className={twMerge(inputBoxClassName, "justify-between", className)}
         >
           {date ? (
             <>

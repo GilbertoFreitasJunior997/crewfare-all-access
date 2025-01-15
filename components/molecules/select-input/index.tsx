@@ -1,7 +1,7 @@
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { twMerge } from "tailwind-merge";
-import { inputContainerClassName } from "../../molecules/text-input";
+import { inputBoxClassName } from "../../molecules/text-input";
 
 export type SelectInputItem = {
   label: string;
@@ -32,7 +32,7 @@ export const SelectInput = ({ items, className }: SelectInputProps) => {
     <SelectPrimitive.Root>
       <SelectPrimitive.Trigger
         className={twMerge(
-          inputContainerClassName,
+          inputBoxClassName,
           "flex items-center justify-between whitespace-nowrap [&>span]:line-clamp-1 font-medium data-[state=open]:border-border text-placeholder",
           className,
         )}
