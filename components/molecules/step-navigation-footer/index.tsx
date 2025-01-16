@@ -43,7 +43,7 @@ export const StepNavigationFooter = <TForm extends FormBase>({
         <Button
           variant="secondary"
           size="icon"
-          disabled={!hasPreviousStep}
+          isDisabled={!hasPreviousStep}
           onClick={goToPreviousStep}
         >
           <ArrowLeftIcon />
@@ -51,7 +51,7 @@ export const StepNavigationFooter = <TForm extends FormBase>({
         <Button
           variant="secondary"
           size="icon"
-          disabled={!hasNextStep}
+          isDisabled={!hasNextStep}
           onClick={goToNextStep}
         >
           <ArrowRightIcon />

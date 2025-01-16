@@ -15,14 +15,14 @@ const variants = cva(
         default: "h-12 px-[42px]",
         icon: "size-12",
       },
-      disabled: {
+      isDisabled: {
         true: "opacity-50 pointer-events-none",
       },
     },
     defaultVariants: {
       variant: "primary",
       size: "default",
-      disabled: false,
+      isDisabled: false,
     },
   },
 );
@@ -47,15 +47,15 @@ export const Button = ({
   variant,
   size,
   className,
-  disabled = false,
+  isDisabled = false,
   type = "button",
   ...props
 }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={twMerge(variants({ variant, size, disabled, className }))}
-      disabled={!!disabled}
+      className={twMerge(variants({ variant, size, isDisabled, className }))}
+      disabled={!!isDisabled}
       {...props}
     />
   );

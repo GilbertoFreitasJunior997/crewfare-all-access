@@ -8,7 +8,7 @@ const meta: Meta<typeof Button> = {
   component: Button,
   args: {
     children: "Click me!",
-    disabled: false,
+    isDisabled: false,
     size: "default",
     onClick: fn(),
   },
@@ -24,7 +24,7 @@ const meta: Meta<typeof Button> = {
       description:
         "Specifies the size or type of the button (e.g., default or icon).",
     },
-    disabled: {
+    isDisabled: {
       control: { type: "boolean" },
       description:
         "Disables the button, removing interactivity and applying disabled styling.",
@@ -74,6 +74,6 @@ export const Icon: Story = {
 
 export const Disabled: Story = {
   args: {
-    disabled: true,
+    isDisabled: true,
   },
 };
