@@ -101,6 +101,31 @@ export const useForm = () => {
     return value;
   };
 
+  const clearValue = (name: string) => {
+    const field = getFieldByName(name);
+    if (!field) {
+      return;
+    }
+
+    setValues((values) => ({ ...values, [name]: field.emptyValue }));
+  };
+
+  const clearGroupValue = (groupName: string) => {
+    const clearedValues: Record<string, unknown> = {};
+
+    for (const field of fields.current) {
+      const { name, group, emptyValue } = field;
+
+      if (group?.name !== groupName) {
+        continue;
+      }
+
+      clearedValues[name] = emptyValue;
+    }
+
+    setValues((values) => ({ ...values, ...clearedValues }));
+  };
+
   const getError = (name: string) => {
     const error = errors[name];
 
@@ -285,6 +310,8 @@ export const useForm = () => {
     unregister,
     getValue,
     setValue,
+    clearValue,
+    clearGroupValue,
     getError,
     validate,
     handleSubmit,

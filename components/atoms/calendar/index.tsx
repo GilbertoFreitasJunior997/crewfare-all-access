@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { DayPicker, DayPickerProps } from "react-day-picker";
+import { twMerge } from "tailwind-merge";
 
 export const Calendar = (props: DayPickerProps) => {
   return (
@@ -26,15 +27,22 @@ export const Calendar = (props: DayPickerProps) => {
         selected: "bg-primary",
         today: "bg-background rounded-md",
         outside: "opacity-30 aria-selected:opacity-50",
+        disabled: "opacity-30",
       }}
       components={{
-        NextMonthButton: (props) => (
-          <button {...props}>
+        NextMonthButton: ({ className, ...props }) => (
+          <button
+            {...props}
+            className={twMerge(className, props.disabled ? "hidden" : "")}
+          >
             <ChevronRightIcon className="size-4" />
           </button>
         ),
-        PreviousMonthButton: (props) => (
-          <button {...props}>
+        PreviousMonthButton: ({ className, ...props }) => (
+          <button
+            {...props}
+            className={twMerge(className, props.disabled ? "hidden" : "")}
+          >
             <ChevronLeftIcon className="size-4" />
           </button>
         ),

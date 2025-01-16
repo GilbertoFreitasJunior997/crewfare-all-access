@@ -13,7 +13,7 @@ import { Popover } from "@/components/atoms/popover";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
 import { ElementRef, memo, useRef } from "react";
-import { DateRange } from "react-day-picker";
+import { DateInterval, DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 
 // inner is extracted so it can use hooks at top level
@@ -21,6 +21,7 @@ const Inner = ({
   value,
   onChange,
   className,
+  disabled,
   inputBoxClassName,
 }: DateRangeInputProps & InputProviderRenderProps<DateRange | undefined>) => {
   const triggerRef = useRef<ElementRef<typeof Popover.Trigger>>(null);
@@ -71,6 +72,9 @@ const Inner = ({
             onSelect={onChange}
             numberOfMonths={2}
             mode="range"
+            disabled={disabled}
+            startMonth={disabled?.before}
+            endMonth={disabled?.after}
           />
         </Popover.Content>
       </Popover.Root>
@@ -80,6 +84,7 @@ const Inner = ({
 
 export type DateRangeInputProps = InputBase<DateRange | undefined> & {
   className?: string;
+  disabled?: DateInterval;
 };
 export const DateRangeInput = memo((props: DateRangeInputProps) => (
   <InputProvider

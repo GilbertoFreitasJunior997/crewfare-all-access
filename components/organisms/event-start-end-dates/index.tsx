@@ -5,26 +5,29 @@ import { DateRangeInput } from "@/components/molecules/date-range-input";
 import { FormFieldGroup } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { useMemo, useState } from "react";
+import { DateInterval } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 
-const groupName = "eventStartEndDates";
+export const eventStartEndDatesGroupName = "eventStartEndDates";
 const fieldName = "date";
 
 type StartEndDateRowProps = {
   fieldKey: number;
   isFirst: boolean;
   hasBookableRange: boolean;
+  disabledDates?: DateInterval;
   onRemoveClick: () => void;
 };
 const StartEndDateRow = ({
   fieldKey,
   isFirst,
   hasBookableRange,
+  disabledDates,
   onRemoveClick,
 }: StartEndDateRowProps) => {
   const group: FormFieldGroup = useMemo<FormFieldGroup>(
     () => ({
-      name: groupName,
+      name: eventStartEndDatesGroupName,
       key: fieldKey,
     }),
     [fieldKey],
@@ -40,6 +43,7 @@ const StartEndDateRow = ({
         showLabel={false}
         label="Event Start and End Dates"
         isDisabled={!hasBookableRange}
+        disabled={disabledDates}
       />
 
       {!isFirst && (
@@ -54,9 +58,11 @@ const StartEndDateRow = ({
 
 export type EventStartEndDatesProps = {
   hasBookableRange: boolean;
+  disabledDates?: DateInterval;
 };
 export const EventStartEndDates = ({
   hasBookableRange,
+  disabledDates,
 }: EventStartEndDatesProps) => {
   const { form } = useFormProvider();
 
@@ -81,7 +87,7 @@ export const EventStartEndDates = ({
     const { unregister } = form;
 
     unregister(fieldName, {
-      name: groupName,
+      name: eventStartEndDatesGroupName,
       key,
     });
   };
@@ -99,6 +105,7 @@ export const EventStartEndDates = ({
               key={key}
               fieldKey={key}
               isFirst={isFirst}
+              disabledDates={disabledDates}
               hasBookableRange={hasBookableRange}
               onRemoveClick={() => handleRemoveRow(key)}
             />
