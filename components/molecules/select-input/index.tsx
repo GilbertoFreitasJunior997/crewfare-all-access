@@ -22,6 +22,10 @@ const Inner = ({
   const triggerRef = useRef<ElementRef<typeof SelectPrimitive.Trigger>>(null);
 
   const handleChange = (selected: string) => {
+    if (selected === "") {
+      return;
+    }
+
     const newValue = items.find((item) => item.value === selected);
 
     onChange(newValue);
@@ -87,6 +91,7 @@ export type SelectInputProps = InputBase<SelectInputItem | undefined> & {
 export const SelectInput = memo((props: SelectInputProps) => (
   <InputProvider
     {...props}
+    defaultValue={props.defaultValue ?? props.items[0]}
     emptyValue={undefined}
   >
     {(providerProps) => (
