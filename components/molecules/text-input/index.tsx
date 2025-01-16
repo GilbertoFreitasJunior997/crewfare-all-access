@@ -37,6 +37,7 @@ export const TextInput = memo(({ className, ...props }: TextInputProps) => (
             className={inputBoxClassName}
             value={value}
             onChange={handleChange}
+            placeholder="Type here"
           />
         </InputContainer>
       );
