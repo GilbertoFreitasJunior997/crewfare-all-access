@@ -1,17 +1,16 @@
+import type { HasChildren, HasClassName } from "@/lib/types";
 import { PlusIcon } from "lucide-react";
-import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
+import type { ButtonProps } from "../button";
 
-export type AddRowButtonProps = PropsWithChildren & {
-  className?: string;
-  onClick?: () => void;
-  isDisabled?: boolean;
-};
+export type AddRowButtonProps = HasChildren &
+  HasClassName &
+  Pick<ButtonProps, "onClick" | "isDisabled">;
 
 export const AddRowButton = ({
   className,
   onClick,
-  isDisabled,
+  isDisabled = false,
   children,
 }: AddRowButtonProps) => {
   return (
