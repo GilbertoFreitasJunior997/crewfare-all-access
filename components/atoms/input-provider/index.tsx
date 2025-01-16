@@ -14,6 +14,7 @@ export type InputContextValue = {
   label?: string;
   showLabel?: boolean;
   isDisabled?: boolean;
+  info?: ReactNode;
 };
 export const InputContext = createContext({} as InputContextValue);
 
@@ -58,6 +59,7 @@ export const InputProvider = <T,>({
   group,
   hasValidationDebounce,
   isDisabled,
+  info,
   children,
 }: InputProviderProps<T>) => {
   const { form } = useFormProvider();
@@ -136,6 +138,7 @@ export const InputProvider = <T,>({
         label,
         showLabel,
         isDisabled,
+        info,
       }}
     >
       {Input}

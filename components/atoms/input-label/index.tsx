@@ -3,6 +3,8 @@
 import { useInput } from "@/hooks/use-input";
 import { LabelHTMLAttributes, MouseEvent, memo } from "react";
 import { twMerge } from "tailwind-merge";
+import { InfoIcon } from "../info-icon";
+import { Tooltip } from "../tooltip";
 
 export type InputLabelProps = LabelHTMLAttributes<HTMLLabelElement>;
 
@@ -11,7 +13,7 @@ export const inputLabelClassName =
 
 export const InputLabel = memo(
   ({ className, onClick, ...props }: InputLabelProps) => {
-    const { name, label, showLabel, isDisabled } = useInput();
+    const { name, label, showLabel, info, isDisabled } = useInput();
 
     if (!label || !showLabel) {
       return null;
@@ -26,14 +28,33 @@ export const InputLabel = memo(
     };
 
     return (
-      <label
-        htmlFor={name}
-        {...props}
-        onClick={handleClick}
-        className={twMerge(inputLabelClassName, className)}
+      <div
+        className={twMerge(
+          inputLabelClassName,
+          "flex items-center gap-[9px]",
+          className,
+        )}
       >
-        {label}
-      </label>
+        <label
+          htmlFor={name}
+          {...props}
+          onClick={handleClick}
+          className="cursor-pointer"
+        >
+          {label}
+        </label>
+
+        {info && (
+          <Tooltip.Provider>
+            <Tooltip.Root>
+              <Tooltip.Trigger>
+                <InfoIcon />
+              </Tooltip.Trigger>
+              <Tooltip.Content className="w-60">{info}</Tooltip.Content>
+            </Tooltip.Root>
+          </Tooltip.Provider>
+        )}
+      </div>
     );
   },
 );

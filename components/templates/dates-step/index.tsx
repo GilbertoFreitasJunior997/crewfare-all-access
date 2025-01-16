@@ -20,6 +20,7 @@ export const DatesStep = () => {
           name="defaultCheckInOutDates"
           label="Default Check-In & Check-Out Dates"
           isRequired={true}
+          info="Please select the Check-In and Check-Out dates before setting the Event or Booking Start and End dates"
         />
 
         <EventStartEndDates hasBookableRange={hasBookableRange} />
