@@ -15,3 +15,5 @@
 
 # typescript
 next-env.d.ts
+
+*storybook.log
