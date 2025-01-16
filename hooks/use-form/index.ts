@@ -40,6 +40,7 @@ export const useForm = () => {
       const { name, emptyValue, defaultValue } = newField;
 
       const hasField = !!getFieldByName(name);
+      const initialValue = defaultValue ?? emptyValue;
 
       if (hasField) {
         fields.current = fields.current.map((field) =>
@@ -50,12 +51,12 @@ export const useForm = () => {
       } else {
         setValues((values) => ({
           ...values,
-          [name]: defaultValue ?? emptyValue,
+          [name]: initialValue,
         }));
         fields.current = [...fields.current, newField as FormField<unknown>];
       }
 
-      validate(name, emptyValue);
+      validate(name, initialValue);
     },
     [getFieldByName],
   );
