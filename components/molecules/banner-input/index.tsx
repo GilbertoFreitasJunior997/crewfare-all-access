@@ -9,14 +9,16 @@ import {
   InputProvider,
   InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 // inner is extracted so it can use hooks at top level
 const Inner = ({
   name,
   text,
+  showText,
   className,
+  value,
   onChange,
 }: InputProviderRenderProps<File | null> & BannerInputProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
@@ -33,6 +35,21 @@ const Inner = ({
     }
 
     onChange(file);
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    multiple: false,
+    onDropAccepted: handleFileAccepted,
+    accept: {
+      "image/*": [".jpeg", ".png"],
+    },
+  });
+
+  useEffect(() => {
+    if (!value) {
+      setImageUrl(undefined);
+      return;
+    }
 
     const reader = new FileReader();
     reader.onloadend = (e) => {
@@ -43,16 +60,12 @@ const Inner = ({
 
       setImageUrl(result as string);
     };
-    reader.readAsDataURL(file);
-  };
+    reader.readAsDataURL(value);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    multiple: false,
-    onDropAccepted: handleFileAccepted,
-    accept: {
-      "image/*": [".jpeg", ".png"],
-    },
-  });
+    return () => {
+      reader.abort();
+    };
+  }, [value]);
 
   return (
     <InputContainer className={className}>
@@ -73,8 +86,10 @@ const Inner = ({
         />
 
         <div className="w-full flex flex-col gap-3 items-center justify-center">
-          {imageUrl ? (
-            <span className="font-bold text-5xl"> {text ?? ""} </span>
+          {value ? (
+            <span className="font-bold text-5xl">
+              {(showText && text) ?? ""}
+            </span>
           ) : (
             <>
               <DropIndicatorIcon />
@@ -96,6 +111,7 @@ const Inner = ({
 export type BannerInputProps = InputBase<File | null> & {
   className?: string;
   text?: string;
+  showText?: boolean;
 };
 export const BannerInput = memo((props: BannerInputProps) => (
   <InputProvider
