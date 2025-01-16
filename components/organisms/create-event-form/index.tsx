@@ -6,7 +6,8 @@ import { StepsRender } from "@/components/atoms/steps-render";
 import type { BannerInputValue } from "@/components/molecules/banner-input";
 import type { DateRangeInputValue } from "@/components/molecules/date-range-input";
 import { StepNavigationFooter } from "@/components/molecules/step-navigation-footer";
-import { useForm } from "@/hooks/use-form";
+import { type FormErrors, useForm } from "@/hooks/use-form";
+import { toast } from "sonner";
 
 export type CreateEventFormData = {
   eventToggle: boolean;
@@ -35,11 +36,26 @@ export type CreateEventFormGroups = "taxesFees" | "eventStartEndDates";
 export const CreateEventForm = () => {
   const form = useForm();
 
+  const handleSuccess = (data: CreateEventFormData) => {
+    toast.success("Success! Check data on console.");
+    // biome-ignore lint/suspicious/noConsoleLog: show success data
+    console.log(data);
+  };
+
+  const handleError = (errors: FormErrors) => {
+    toast.error("Error... Check errors on console.");
+    // biome-ignore lint/suspicious/noConsoleLog: show errors
+    console.log(errors);
+  };
+
   return (
     <FormProvider form={form}>
       <StepsRender />
 
-      <StepNavigationFooter />
+      <StepNavigationFooter
+        onSuccess={handleSuccess}
+        onError={handleError}
+      />
     </FormProvider>
   );
 };
