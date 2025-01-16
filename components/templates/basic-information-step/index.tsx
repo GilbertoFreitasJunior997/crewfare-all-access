@@ -1,13 +1,29 @@
-import { steps } from "@/app/page";
 import { Container } from "@/components/atoms/container";
+import { SelectInputItem } from "@/components/atoms/select-input-item";
 import { ToggleButton } from "@/components/atoms/toggle-button";
 import { BannerInput } from "@/components/molecules/banner-input";
 import { CheckboxInput } from "@/components/molecules/checkbox-input";
 import { SelectInput } from "@/components/molecules/select-input";
 import { StepContent } from "@/components/molecules/step-content";
 import { TextInput } from "@/components/molecules/text-input";
+import { steps } from "@/lib/steps";
 
 const toggleOptions = ["Enable Event", "Disable Event"];
+const eventTypes: SelectInputItem[] = [
+  {
+    value: "public",
+    label: "Public Event",
+  },
+  {
+    value: "private",
+    label: "Private Event",
+  },
+  {
+    value: "other",
+    label: "Other Event",
+  },
+];
+
 export const BasicInformationStep = () => {
   return (
     <StepContent step={steps[0]}>
@@ -17,15 +33,27 @@ export const BasicInformationStep = () => {
         </div>
 
         <SelectInput
-          items={[]}
+          name="eventType"
+          label="Event Type"
+          items={eventTypes}
           className="col-span-1"
         />
-        <TextInput className="col-span-1" />
+        <TextInput
+          name="eventName"
+          label="Event Name"
+          className="col-span-1"
+        />
 
-        <BannerInput className="col-span-2" />
-        <CheckboxInput className="col-span-2">
-          Overlay Title on Banner
-        </CheckboxInput>
+        <BannerInput
+          name="banner"
+          label="Banner"
+          className="col-span-2"
+        />
+        <CheckboxInput
+          name="bannerOverlayTitle"
+          label="Overlay Title on Banner"
+          className="col-span-2"
+        />
       </Container>
     </StepContent>
   );
