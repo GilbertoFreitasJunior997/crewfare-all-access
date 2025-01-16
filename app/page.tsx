@@ -33,15 +33,8 @@ const TestStepRender = () => {
 const MyForm = () => {
   const form = useForm();
 
-  const handleSuccess = (values: unknown) => {
-    console.info(values);
-  };
-
   return (
-    <FormProvider
-      form={form}
-      onSuccess={handleSuccess}
-    >
+    <FormProvider form={form}>
       <TestStepRender />
 
       <StepNavigationFooter />

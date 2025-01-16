@@ -2,7 +2,7 @@
 
 import { InputRules } from "@/components/atoms/input-provider";
 import { Step } from "@/components/atoms/stepper-provider";
-import { FormEvent, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useStepper } from "../use-stepper";
 import { getBaseFieldNameFromGroup, getFieldName } from "./utils";
 
@@ -184,9 +184,10 @@ export const useForm = () => {
   };
 
   const handleSubmit = (
-    onSuccess: (values: Record<string, unknown>) => void,
+    onSuccess?: (values: Record<string, unknown>) => void,
+    onError?: (errors: Record<string, string>) => void,
   ) => {
-    return (e: FormEvent<HTMLFormElement>) => {
+    return (e: { preventDefault: VoidFunction }) => {
       e.preventDefault();
       hasSubmitted.current = true;
 
@@ -244,6 +245,7 @@ export const useForm = () => {
         for (const step of steps) {
           validateStep(step);
         }
+        onError?.(errors);
         return;
       }
 
@@ -266,7 +268,7 @@ export const useForm = () => {
       }
 
       setErrors({});
-      onSuccess(values);
+      onSuccess?.(values);
     };
   };
 

@@ -1,11 +1,40 @@
 import { ArrowLeftIcon } from "@/components/atoms/arrow-left-icon";
 import { ArrowRightIcon } from "@/components/atoms/arrow-right-icon";
 import { Button } from "@/components/atoms/button";
+import { useFormProvider } from "@/hooks/use-form-provider";
 import { useStepper } from "@/hooks/use-stepper";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-export const StepNavigationFooter = () => {
+const stepNavigationFooterSaveAnimationMs = 100;
+
+export type StepNavigationFooterProps = {
+  onSuccess?: (data: object) => void;
+  onError?: (errors: Record<string, string>) => void;
+};
+export const StepNavigationFooter = ({
+  onSuccess,
+  onError,
+}: StepNavigationFooterProps) => {
+  const { form } = useFormProvider();
   const { hasNextStep, hasPreviousStep, goToNextStep, goToPreviousStep } =
     useStepper();
+
+  const [isButtonShaking, setIsButtonShaking] = useState(false);
+
+  if (!form) {
+    return null;
+  }
+  const { handleSubmit } = form;
+
+  const handleError = (errors: Record<string, string>) => {
+    setIsButtonShaking(true);
+    setTimeout(() => {
+      setIsButtonShaking(false);
+    }, stepNavigationFooterSaveAnimationMs);
+
+    onError?.(errors);
+  };
 
   return (
     <section className="flex flex-col items-end justify-center mt-6 space-y-12">
@@ -28,7 +57,19 @@ export const StepNavigationFooter = () => {
         </Button>
       </div>
 
-      <Button type="submit">Save</Button>
+      <motion.div
+        animate={{
+          x: isButtonShaking ? [0, -8, 16, -16, 0] : 0,
+        }}
+        transition={{ duration: stepNavigationFooterSaveAnimationMs / 1000 }}
+      >
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSuccess, handleError)}
+        >
+          Save
+        </Button>
+      </motion.div>
     </section>
   );
 };
