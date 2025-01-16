@@ -14,7 +14,7 @@ export const InputLabel = memo(({ className, ...props }: InputLabelProps) => {
       htmlFor={name}
       {...props}
       className={twMerge(
-        "text-sm mb-3 block cursor-pointer select-none w-min",
+        "text-sm mb-3 block cursor-pointer select-none w-min text-nowrap",
         className,
       )}
     >
