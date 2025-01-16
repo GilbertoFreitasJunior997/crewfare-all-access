@@ -13,6 +13,7 @@ export const NumberInput = memo(({ className, ...props }: NumberInputProps) => (
   <InputProvider
     {...props}
     emptyValue={Number.NaN}
+    hasValidationDebounce={true}
   >
     {({ value, onChange, inputBoxClassName }) => {
       const { name } = props;

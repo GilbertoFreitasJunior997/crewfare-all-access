@@ -13,6 +13,7 @@ export const TextInput = memo(({ className, ...props }: TextInputProps) => (
   <InputProvider
     {...props}
     emptyValue=""
+    hasValidationDebounce={true}
   >
     {({ value, onChange, inputBoxClassName }) => {
       const { name } = props;

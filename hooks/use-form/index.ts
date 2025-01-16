@@ -5,7 +5,7 @@ import { Step } from "@/components/atoms/stepper-provider";
 import { FormEvent, useCallback, useRef, useState } from "react";
 import { useStepper } from "../use-stepper";
 
-export type FormField<T = unknown> = InputRules & {
+export type FormField<T = unknown> = InputRules<T> & {
   name: string;
   label?: string;
   emptyValue?: T;
@@ -28,20 +28,23 @@ export const useForm = () => {
   }, []);
 
   const register = useCallback(
-    (newField: FormField) => {
+    <T>(newField: FormField<T>) => {
       const { name, emptyValue } = newField;
 
       const hasField = !!getFieldByName(name);
 
       if (hasField) {
         fields.current = fields.current.map((field) =>
-          field.name === name ? { ...field, ...newField } : field,
+          field.name === name
+            ? ({ ...field, ...newField } as FormField<unknown>)
+            : field,
         );
-        return;
+      } else {
+        setValues((values) => ({ ...values, [name]: emptyValue }));
+        fields.current = [...fields.current, newField as FormField<unknown>];
       }
 
-      setValues((values) => ({ ...values, [name]: emptyValue }));
-      fields.current = [...fields.current, newField];
+      validate(name, emptyValue);
     },
     [getFieldByName],
   );
@@ -65,7 +68,7 @@ export const useForm = () => {
   };
 
   const checkField = (field: FormField, value: unknown) => {
-    const { name, label, isRequired } = field;
+    const { name, label, isRequired, customValidation } = field;
 
     if (isRequired) {
       const isBoolean = typeof value === "boolean";
@@ -76,6 +79,14 @@ export const useForm = () => {
             ? isRequired
             : `Please enter the ${label ?? name}`;
 
+        return errorMessage;
+      }
+    }
+
+    if (customValidation) {
+      const errorMessage = customValidation(value);
+
+      if (errorMessage) {
         return errorMessage;
       }
     }

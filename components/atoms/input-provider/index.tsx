@@ -13,13 +13,14 @@ export type InputContextValue = {
 };
 export const InputContext = createContext({} as InputContextValue);
 
-export type InputRules = {
+export type InputRules<T = unknown> = {
   isRequired?: boolean | string;
+  customValidation?: (value: T) => string | undefined;
 };
 
 // generic input props, goes to all inputs
 export type InputBase<T> = InputContextValue &
-  InputRules & {
+  InputRules<T> & {
     name: string;
     label?: string;
     value?: T;
@@ -36,6 +37,7 @@ export type InputProviderRenderProps<T> = {
 export type InputProviderProps<T> = InputBase<T> & {
   children: (props: InputProviderRenderProps<T>) => ReactNode;
   emptyValue?: T;
+  hasValidationDebounce?: boolean;
 };
 export const InputProvider = <T,>({
   name,
@@ -44,6 +46,8 @@ export const InputProvider = <T,>({
   onChange,
   emptyValue,
   isRequired,
+  customValidation,
+  hasValidationDebounce,
   children,
 }: InputProviderProps<T>) => {
   const { form } = useFormProvider();
@@ -59,6 +63,12 @@ export const InputProvider = <T,>({
     }
 
     const value = form.setValue(name, newValue);
+
+    if (!hasValidationDebounce) {
+      form.validate(name, value);
+
+      return;
+    }
 
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
@@ -80,8 +90,17 @@ export const InputProvider = <T,>({
       emptyValue,
       isRequired,
       step: providedStep.step ?? undefined,
+      customValidation,
     });
-  }, [form?.register, name, label, emptyValue, isRequired, providedStep?.step]);
+  }, [
+    form?.register,
+    name,
+    label,
+    emptyValue,
+    isRequired,
+    providedStep?.step,
+    customValidation,
+  ]);
 
   const value = form ? (form.getValue<T>(name) ?? emptyValue) : controlledValue;
   const { inputBoxClassName } = useInputBox({ name });

@@ -15,13 +15,23 @@ const TestStepRender = () => {
     return null;
   }
 
-  const { render: Render } = currentStep;
+  return steps.map((step) => {
+    const Render = step.render;
+    const isActive = step === currentStep;
 
-  if (!Render) {
-    return null;
-  }
+    if (!Render) {
+      return null;
+    }
 
-  return <Render />;
+    return (
+      <div
+        key={step.name}
+        className={isActive ? "" : "hidden"}
+      >
+        <Render />
+      </div>
+    );
+  });
 };
 
 const MyForm = () => {
