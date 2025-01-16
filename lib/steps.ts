@@ -1,16 +1,16 @@
 import { Step } from "@/components/atoms/stepper-provider";
-// import { BasicInformationStep } from "@/components/templates/basic-information-step";
-// import { DetailsStep } from "@/components/templates/details-step";
+import { BasicInformationStep } from "@/components/templates/basic-information-step";
 import { DatesStep } from "@/components/templates/dates-step";
+import { DetailsStep } from "@/components/templates/details-step";
 
 export const steps: Step[] = [
   {
     name: "Basic Information",
-    component: () => null,
+    component: BasicInformationStep,
   },
   {
     name: "Details",
-    component: () => null,
+    component: DetailsStep,
   },
   {
     name: "Dates",
