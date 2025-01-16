@@ -35,11 +35,11 @@ export const StepItem = memo(
           <div className="flex items-center gap-3">
             <div
               className={twMerge(
-                "size-6 rounded-full grid place-content-center text-xs font-semibold transition-colors",
-                isActive
-                  ? "bg-primary text-white"
-                  : status === "success"
-                    ? "bg-accent"
+                "size-6 rounded-full grid place-content-center text-xs font-semibold transition-colors text-white",
+                status === "success"
+                  ? "bg-accent text-background-accent"
+                  : isActive
+                    ? "bg-primary "
                     : "bg-secondary text-placeholder",
               )}
             >
