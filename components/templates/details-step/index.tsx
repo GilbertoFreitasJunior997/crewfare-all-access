@@ -52,7 +52,7 @@ export const DetailsStep = () => {
           className="col-span-1"
           isRequired={true}
           allowIntegersOnly={true}
-          min={0}
+          min={1}
         />
       </Container>
     </StepContent>

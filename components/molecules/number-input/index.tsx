@@ -112,6 +112,7 @@ export const NumberInput = memo((props: NumberInputProps) => (
   <InputProvider
     {...props}
     emptyValue={Number.NaN}
+    defaultValue={props.defaultValue ?? props.min}
     hasValidationDebounce={true}
   >
     {(providerProps) => (
