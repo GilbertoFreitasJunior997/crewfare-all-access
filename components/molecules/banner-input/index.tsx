@@ -9,8 +9,10 @@ import {
   InputProvider,
   type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
+import { useFormProvider } from "@/hooks/use-form-provider";
 import { memo, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { twMerge } from "tailwind-merge";
 
 // inner is extracted so it can use hooks at top level
 const Inner = ({
@@ -22,6 +24,8 @@ const Inner = ({
   onChange,
 }: InputProviderRenderProps<File | null> & BannerInputProps) => {
   const [imageUrl, setImageUrl] = useState<string>();
+  const { form } = useFormProvider();
+  const hasError = !!form?.getError(name);
 
   const handleFileAccepted = (files: File[]) => {
     const file = files[0];
@@ -73,7 +77,12 @@ const Inner = ({
 
       <button
         type="button"
-        className="flex justify-center items-center w-full h-[244px] rounded-2xl select-none cursor-pointer bg-secondary banner-input-dashed-border bg-cover bg-no-repeat bg-center overflow-hidden"
+        className={twMerge(
+          "flex justify-center items-center w-full h-[244px] rounded-2xl select-none cursor-pointer bg-cover bg-no-repeat bg-center overflow-hidden",
+          hasError
+            ? "banner-input-dashed-border-error bg-danger/5"
+            : "banner-input-dashed-border bg-secondary",
+        )}
         {...getRootProps()}
         style={{
           backgroundImage: imageUrl ? `url(${imageUrl})` : undefined,
