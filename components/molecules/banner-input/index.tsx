@@ -10,9 +10,15 @@ import {
   type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { useFormProvider } from "@/hooks/use-form-provider";
-import { memo, useEffect, useState } from "react";
+import { LoaderCircleIcon } from "lucide-react";
+import { memo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { twMerge } from "tailwind-merge";
+
+export type BannerInputValue = {
+  file: File;
+  base64: string;
+};
 
 // inner is extracted so it can use hooks at top level
 const Inner = ({
@@ -22,8 +28,9 @@ const Inner = ({
   className,
   value,
   onChange,
-}: InputProviderRenderProps<File | null> & BannerInputProps) => {
-  const [imageUrl, setImageUrl] = useState<string>();
+}: InputProviderRenderProps<BannerInputValue | null> & BannerInputProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { form } = useFormProvider();
   const hasError = !!form?.getError(name);
 
@@ -37,8 +44,29 @@ const Inner = ({
       // @TODO toast "incorrect file type"
       return;
     }
+    if (isLoading) {
+      return;
+    }
 
-    onChange(file);
+    setIsLoading(true);
+
+    const reader = new FileReader();
+    reader.onloadend = (e) => {
+      const result = e.target?.result;
+      if (!result) {
+        return;
+      }
+
+      setIsLoading(false);
+      onChange({
+        file,
+        base64: result as string,
+      });
+    };
+    reader.onerror = () => {
+      setIsLoading(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -48,28 +76,6 @@ const Inner = ({
       "image/*": [".jpeg", ".png"],
     },
   });
-
-  useEffect(() => {
-    if (!value) {
-      setImageUrl(undefined);
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onloadend = (e) => {
-      const result = e.target?.result;
-      if (!result) {
-        return;
-      }
-
-      setImageUrl(result as string);
-    };
-    reader.readAsDataURL(value);
-
-    return () => {
-      reader.abort();
-    };
-  }, [value]);
 
   return (
     <InputContainer className={className}>
@@ -85,7 +91,7 @@ const Inner = ({
         )}
         {...getRootProps()}
         style={{
-          backgroundImage: imageUrl ? `url(${imageUrl})` : undefined,
+          backgroundImage: value?.base64 ? `url(${value?.base64})` : undefined,
         }}
       >
         <input
@@ -95,7 +101,9 @@ const Inner = ({
         />
 
         <div className="w-full flex flex-col gap-3 items-center justify-center">
-          {value ? (
+          {isLoading ? (
+            <LoaderCircleIcon className="animate-spin" />
+          ) : value ? (
             <span className="font-bold text-5xl">
               {(showText && text) ?? ""}
             </span>
@@ -117,7 +125,7 @@ const Inner = ({
   );
 };
 
-export type BannerInputProps = InputBase<File | null> & {
+export type BannerInputProps = InputBase<BannerInputValue | null> & {
   className?: string;
   text?: string;
   showText?: boolean;
