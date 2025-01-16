@@ -1,9 +1,16 @@
 "use client";
 
-import { PropsWithChildren, createContext, useCallback, useState } from "react";
+import {
+  FC,
+  PropsWithChildren,
+  createContext,
+  useCallback,
+  useState,
+} from "react";
 
 export type Step = {
   name: string;
+  render?: FC;
 };
 
 export type StepperContextValue = {

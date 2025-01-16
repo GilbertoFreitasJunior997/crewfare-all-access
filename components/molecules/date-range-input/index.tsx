@@ -15,13 +15,13 @@ import { CalendarDaysIcon } from "lucide-react";
 import { ElementRef, memo, useRef } from "react";
 import { DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
-import { inputBoxClassName } from "../../molecules/text-input";
 
 // inner is extracted so it can use hooks at top level
 const Inner = ({
   value,
   onChange,
   className,
+  inputBoxClassName,
 }: DateRangeInputProps & InputProviderRenderProps<DateRange | undefined>) => {
   const triggerRef = useRef<ElementRef<typeof Popover.Trigger>>(null);
 

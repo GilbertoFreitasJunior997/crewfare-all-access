@@ -43,7 +43,7 @@ export const StepContent = ({ step, children }: StepContentProps) => {
           </Button>
         </div>
 
-        <Button>Save</Button>
+        <Button type="submit">Save</Button>
       </section>
     </StepProvider>
   );

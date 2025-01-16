@@ -10,13 +10,13 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { ElementRef, memo, useRef } from "react";
 import { twMerge } from "tailwind-merge";
-import { inputBoxClassName } from "../../molecules/text-input";
 
 const Inner = ({
   items,
   className,
   value,
   onChange,
+  inputBoxClassName,
 }: SelectInputProps &
   InputProviderRenderProps<SelectInputItem | undefined>) => {
   const triggerRef = useRef<ElementRef<typeof SelectPrimitive.Trigger>>(null);

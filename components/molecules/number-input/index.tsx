@@ -4,7 +4,6 @@ import { InputBase, InputProvider } from "@/components/atoms/input-provider";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { ChangeEvent, memo } from "react";
 import { twMerge } from "tailwind-merge";
-import { inputBoxClassName } from "../text-input";
 
 export type NumberInputProps = InputBase<number> & {
   className?: string;
@@ -15,7 +14,7 @@ export const NumberInput = memo(({ className, ...props }: NumberInputProps) => (
     {...props}
     emptyValue={Number.NaN}
   >
-    {({ value, onChange }) => {
+    {({ value, onChange, inputBoxClassName }) => {
       const { name } = props;
 
       const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

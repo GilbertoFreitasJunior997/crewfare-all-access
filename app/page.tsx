@@ -4,13 +4,27 @@ import { FormProvider } from "@/components/atoms/form-provider";
 import { StepperProvider } from "@/components/atoms/stepper-provider";
 import { Header } from "@/components/molecules/header";
 import { Stepper } from "@/components/molecules/stepper";
-import { BasicInformationStep } from "@/components/templates/basic-information-step";
 import { useForm } from "@/hooks/use-form";
+import { useStepper } from "@/hooks/use-stepper";
 import { steps } from "@/lib/steps";
+
+const TestStepRender = () => {
+  const { currentStep } = useStepper();
+  if (!currentStep) {
+    return null;
+  }
+
+  const { render: Render } = currentStep;
+
+  if (!Render) {
+    return null;
+  }
+
+  return <Render />;
+};
 
 export default function Home() {
   const form = useForm();
-  const { handleSubmit } = form;
 
   const handleSuccess = (values: unknown) => {
     console.info(values);
@@ -25,11 +39,12 @@ export default function Home() {
           <Stepper title="Create Event" />
 
           <main className="h-fit p-5">
-            <form onSubmit={handleSubmit(handleSuccess)}>
-              <FormProvider form={form}>
-                <BasicInformationStep />
-              </FormProvider>
-            </form>
+            <FormProvider
+              form={form}
+              onSuccess={handleSuccess}
+            >
+              <TestStepRender />
+            </FormProvider>
           </main>
         </div>
       </div>

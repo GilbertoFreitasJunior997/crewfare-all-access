@@ -8,6 +8,7 @@ import { StepContent } from "@/components/molecules/step-content";
 import { TextInput } from "@/components/molecules/text-input";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
+import { twMerge } from "tailwind-merge";
 
 const toggleOptions = ["Enable Event", "Disable Event"];
 const eventTypes: SelectInputItem[] = [
@@ -25,7 +26,7 @@ const eventTypes: SelectInputItem[] = [
   },
 ];
 
-export const BasicInformationStep = () => {
+export function BasicInformationStep() {
   const { form } = useFormProvider();
   if (!form) {
     return null;
@@ -48,11 +49,13 @@ export const BasicInformationStep = () => {
           label="Event Type"
           items={eventTypes}
           className="col-span-1"
+          isRequired={true}
         />
         <TextInput
           name="eventName"
           label="Event Name"
           className="col-span-1"
+          isRequired={true}
         />
         <BannerInput
           name="banner"
@@ -60,6 +63,7 @@ export const BasicInformationStep = () => {
           className="col-span-2"
           text={overlayTitle}
           showText={hasBannerOverlayTitle}
+          isRequired={"Please provide a Banner"}
         />
 
         <CheckboxInput
@@ -68,14 +72,16 @@ export const BasicInformationStep = () => {
           className="col-span-2"
         />
 
-        {hasBannerOverlayTitle && (
-          <TextInput
-            name="overlayTitle"
-            label="Overlay Title"
-            className="col-span-2"
-          />
-        )}
+        <TextInput
+          name="overlayTitle"
+          label="Overlay Title"
+          className={twMerge(
+            "col-span-2",
+            hasBannerOverlayTitle ? "" : "hidden",
+          )}
+          isRequired={hasBannerOverlayTitle}
+        />
       </Container>
     </StepContent>
   );
-};
+}
