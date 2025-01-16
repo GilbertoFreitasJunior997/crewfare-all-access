@@ -1,6 +1,6 @@
-export type AlertIconProps = {
-  className?: string;
-};
+import type { HasClassName } from "@/lib/types";
+
+export type AlertIconProps = HasClassName;
 
 export const AlertIcon = ({ className }: AlertIconProps) => (
   <svg
