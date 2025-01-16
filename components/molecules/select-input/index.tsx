@@ -10,7 +10,7 @@ import {
 import { SelectInputItem } from "@/components/atoms/select-input-item";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import { type ElementRef, memo, useRef } from "react";
+import { type ComponentRef, memo, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 const Inner = ({
@@ -21,7 +21,7 @@ const Inner = ({
   inputBoxClassName,
 }: SelectInputProps &
   InputProviderRenderProps<SelectInputItem | undefined>) => {
-  const triggerRef = useRef<ElementRef<typeof SelectPrimitive.Trigger>>(null);
+  const triggerRef = useRef<ComponentRef<typeof SelectPrimitive.Trigger>>(null);
 
   const handleChange = (selected: string) => {
     if (selected === "") {

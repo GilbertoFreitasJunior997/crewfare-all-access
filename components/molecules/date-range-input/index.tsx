@@ -13,7 +13,7 @@ import { Popover } from "@/components/atoms/popover";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
-import { type ElementRef, memo, useRef } from "react";
+import { type ComponentRef, memo, useRef } from "react";
 import type { DateInterval, DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 
@@ -29,7 +29,7 @@ const Inner = ({
   const { form } = useFormProvider();
   const hasError = !!form?.getError(name);
 
-  const triggerRef = useRef<ElementRef<typeof Popover.Trigger>>(null);
+  const triggerRef = useRef<ComponentRef<typeof Popover.Trigger>>(null);
 
   const handleLabelClick = () => {
     triggerRef.current?.click();
