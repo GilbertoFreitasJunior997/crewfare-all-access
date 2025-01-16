@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/atoms/button";
 import { FormProvider } from "@/components/atoms/form-provider";
 import { StepperProvider } from "@/components/atoms/stepper-provider";
 import { Header } from "@/components/molecules/header";
@@ -30,8 +29,6 @@ export default function Home() {
               <FormProvider form={form}>
                 <BasicInformationStep />
               </FormProvider>
-
-              <Button type="submit"> Submit </Button>
             </form>
           </main>
         </div>
