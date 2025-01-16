@@ -1,16 +1,15 @@
 import { Container } from "@/components/atoms/container";
 import type { SelectInputItem } from "@/components/atoms/select-input-item";
-import { ToggleButton } from "@/components/atoms/toggle-button";
 import { BannerInput } from "@/components/molecules/banner-input";
 import { CheckboxInput } from "@/components/molecules/checkbox-input";
 import { SelectInput } from "@/components/molecules/select-input";
 import { StepContent } from "@/components/molecules/step-content";
 import { TextInput } from "@/components/molecules/text-input";
+import { ToggleButtonInput } from "@/components/molecules/toggle-button-input";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
 import { twMerge } from "tailwind-merge";
 
-const toggleOptions = ["Enable Event", "Disable Event"];
 const eventTypes: SelectInputItem[] = [
   {
     value: "public",
@@ -41,7 +40,11 @@ export function BasicInformationStep() {
     <StepContent step={steps[0]}>
       <Container className="grid grid-cols-2">
         <div className="col-span-2 flex items-center justify-center">
-          <ToggleButton options={toggleOptions} />
+          <ToggleButtonInput
+            name="eventToggle"
+            trueText="Enable Event"
+            falseText="Disable Event"
+          />
         </div>
 
         <SelectInput
