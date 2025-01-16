@@ -1,5 +1,6 @@
+import type { HasChildren, HasClassName } from "@/lib/types";
 import { type VariantProps, cva } from "class-variance-authority";
-import type { ButtonHTMLAttributes, PropsWithChildren } from "react";
+import type { MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
 
 const variants = cva(
@@ -15,7 +16,7 @@ const variants = cva(
         icon: "size-12",
       },
       disabled: {
-        true: "opacity-50",
+        true: "opacity-50 pointer-events-none",
       },
     },
     defaultVariants: {
@@ -27,25 +28,35 @@ const variants = cva(
 );
 
 export type ButtonProps = VariantProps<typeof variants> &
-  ButtonHTMLAttributes<HTMLButtonElement> &
-  PropsWithChildren;
+  HasChildren &
+  HasClassName & {
+    /**
+     * Button HTML type
+     *
+     * @default "button"
+     */
+    type?: "button" | "submit";
+
+    /**
+     * Function called when button is clicked
+     */
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  };
 
 export const Button = ({
   variant,
   size,
   className,
-  children,
+  disabled = false,
+  type = "button",
   ...props
 }: ButtonProps) => {
-  const { disabled } = props;
-
   return (
     <button
-      type="button"
+      type={type}
       className={twMerge(variants({ variant, size, disabled, className }))}
+      disabled={!!disabled}
       {...props}
-    >
-      {children}
-    </button>
+    />
   );
 };
