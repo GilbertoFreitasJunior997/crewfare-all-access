@@ -13,15 +13,29 @@ const Inner = ({
   name,
   value,
   suffix,
+  min,
+  allowIntegersOnly,
   onChange,
   className,
   inputBoxClassName,
 }: NumberInputProps & InputProviderRenderProps<number>) => {
   const [hasFocus, setHasFocus] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.valueAsNumber;
+  const handleChange = (value: number) => {
+    let newValue = value;
+    if (min !== undefined && newValue < min) {
+      newValue = min;
+    }
+
     onChange(newValue);
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let newValue = e.target.valueAsNumber;
+    if (allowIntegersOnly) {
+      newValue = Number.parseInt(String(newValue));
+    }
+    handleChange(newValue);
   };
 
   const handleFocus = () => {
@@ -34,12 +48,12 @@ const Inner = ({
 
   const handleAddClick = () => {
     const newValue = (value || 0) + 1;
-    onChange(newValue);
+    handleChange(newValue);
   };
 
   const handleSubractClick = () => {
     const newValue = (value || 0) - 1;
-    onChange(newValue);
+    handleChange(newValue);
   };
 
   const displayValue =
@@ -58,7 +72,7 @@ const Inner = ({
           className={twMerge(inputBoxClassName, "appearance-none pr-9")}
           type={hasFocus ? "number" : "text"}
           value={displayValue}
-          onChange={handleChange}
+          onChange={handleInputChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
@@ -91,6 +105,8 @@ const Inner = ({
 export type NumberInputProps = InputBase<number> & {
   className?: string;
   suffix?: string;
+  allowIntegersOnly?: boolean;
+  min?: number;
 };
 export const NumberInput = memo((props: NumberInputProps) => (
   <InputProvider

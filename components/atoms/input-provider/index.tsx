@@ -32,6 +32,7 @@ export type InputBase<T> = InputContextValue &
     value?: T;
     onChange?: (oldValue: T) => void;
     group?: FormFieldGroup;
+    defaultValue?: T;
   };
 
 // props passed to the children render of the HOC
@@ -60,6 +61,7 @@ export const InputProvider = <T,>({
   hasValidationDebounce,
   isDisabled,
   info,
+  defaultValue,
   children,
 }: InputProviderProps<T>) => {
   const { form } = useFormProvider();
@@ -109,6 +111,7 @@ export const InputProvider = <T,>({
       step: providedStep.step ?? undefined,
       customValidation,
       group,
+      defaultValue,
     });
   }, [
     form?.register,
@@ -119,6 +122,7 @@ export const InputProvider = <T,>({
     providedStep?.step,
     customValidation,
     group,
+    defaultValue,
   ]);
 
   const value = form ? (form.getValue<T>(name) ?? emptyValue) : controlledValue;

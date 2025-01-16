@@ -61,6 +61,7 @@ const TaxFeeRow = ({ fieldKey, onRemoveClick }: TaxFeeRow) => {
         group={group}
         isRequired={true}
         suffix={isPercent ? "%" : undefined}
+        min={0}
       />
       <SelectInput
         name="type"

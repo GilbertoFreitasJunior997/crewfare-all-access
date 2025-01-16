@@ -17,6 +17,7 @@ export type FormField<T = unknown> = InputRules<T> & {
   emptyValue?: T;
   step?: Step;
   group?: FormFieldGroup;
+  defaultValue?: T;
 };
 
 export const useForm = () => {
@@ -36,7 +37,7 @@ export const useForm = () => {
 
   const register = useCallback(
     <T>(newField: FormField<T>) => {
-      const { name, emptyValue } = newField;
+      const { name, emptyValue, defaultValue } = newField;
 
       const hasField = !!getFieldByName(name);
 
@@ -47,7 +48,10 @@ export const useForm = () => {
             : field,
         );
       } else {
-        setValues((values) => ({ ...values, [name]: emptyValue }));
+        setValues((values) => ({
+          ...values,
+          [name]: defaultValue ?? emptyValue,
+        }));
         fields.current = [...fields.current, newField as FormField<unknown>];
       }
 
@@ -109,7 +113,10 @@ export const useForm = () => {
     if (isRequired) {
       const isBoolean = typeof value === "boolean";
 
-      if (!isBoolean && (!value || Number.isNaN(value))) {
+      if (
+        !isBoolean &&
+        (typeof value === "number" ? Number.isNaN(value) : !value)
+      ) {
         const errorMessage =
           typeof isRequired === "string"
             ? isRequired

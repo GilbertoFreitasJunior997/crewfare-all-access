@@ -44,12 +44,15 @@ export const DetailsStep = () => {
           label="Featured Hotels Title"
           className="col-span-1"
           isRequired={true}
+          defaultValue="Featured hotels"
         />
         <NumberInput
           name="minimumNights"
           label="Minimum Nights"
           className="col-span-1"
           isRequired={true}
+          allowIntegersOnly={true}
+          min={0}
         />
       </Container>
     </StepContent>
