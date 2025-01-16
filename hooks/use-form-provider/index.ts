@@ -2,12 +2,15 @@
 
 import { FormContext } from "@/components/atoms/form-provider";
 import { useContext } from "react";
-import type { Form } from "../use-form";
+import type { Form, FormBase } from "../use-form";
 
-export const useFormProvider = () => {
+export const useFormProvider = <
+  TForm extends FormBase = FormBase,
+  TGroup extends string = string,
+>() => {
   const { form } = useContext(FormContext);
 
   return {
-    form: form as Form | undefined,
+    form: form as Form<TForm, TGroup> | undefined,
   };
 };

@@ -64,7 +64,8 @@ export const InputProvider = <T,>({
   defaultValue,
   children,
 }: InputProviderProps<T>) => {
-  const { form } = useFormProvider();
+  // biome-ignore lint/suspicious/noExplicitAny: an input can be on any form
+  const { form } = useFormProvider<any>();
   const providedStep = useStep();
   const name = getFieldName(baseName, group);
 
@@ -125,7 +126,9 @@ export const InputProvider = <T,>({
     defaultValue,
   ]);
 
-  const value = form ? (form.getValue<T>(name) ?? emptyValue) : controlledValue;
+  const value = (
+    form ? (form.getValue(name) ?? emptyValue) : controlledValue
+  ) as T;
   const { inputBoxClassName } = useInputBox({ name, isDisabled });
 
   const Input = children({

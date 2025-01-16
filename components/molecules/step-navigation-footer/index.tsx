@@ -1,6 +1,7 @@
 import { ArrowLeftIcon } from "@/components/atoms/arrow-left-icon";
 import { ArrowRightIcon } from "@/components/atoms/arrow-right-icon";
 import { Button } from "@/components/atoms/button";
+import type { FormBase, FormErrors } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { useStepper } from "@/hooks/use-stepper";
 import { motion } from "framer-motion";
@@ -8,15 +9,15 @@ import { useState } from "react";
 
 const stepNavigationFooterSaveAnimationMs = 100;
 
-export type StepNavigationFooterProps = {
-  onSuccess?: (data: object) => void;
-  onError?: (errors: Record<string, string>) => void;
+export type StepNavigationFooterProps<TForm extends FormBase> = {
+  onSuccess?: (data: TForm) => void;
+  onError?: (errors: FormErrors<TForm>) => void;
 };
-export const StepNavigationFooter = ({
+export const StepNavigationFooter = <TForm extends FormBase>({
   onSuccess,
   onError,
-}: StepNavigationFooterProps) => {
-  const { form } = useFormProvider();
+}: StepNavigationFooterProps<TForm>) => {
+  const { form } = useFormProvider<TForm>();
   const { hasNextStep, hasPreviousStep, goToNextStep, goToPreviousStep } =
     useStepper();
 
@@ -27,7 +28,7 @@ export const StepNavigationFooter = ({
   }
   const { handleSubmit } = form;
 
-  const handleError = (errors: Record<string, string>) => {
+  const handleError = (errors: FormErrors<TForm>) => {
     setIsButtonShaking(true);
     setTimeout(() => {
       setIsButtonShaking(false);

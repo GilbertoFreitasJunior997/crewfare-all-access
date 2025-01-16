@@ -8,35 +8,46 @@ import { getBaseFieldNameFromGroup, getFieldName } from "./utils";
 
 export type FormFieldGroup = {
   name: string;
-  key: number | string;
+  key: number;
 };
 
-export type FormField<T = unknown> = InputRules<T> & {
-  name: string;
+export type FormField<
+  TValue = unknown,
+  TForm extends FormBase = FormBase,
+> = InputRules<TValue> & {
+  name: keyof TForm;
   label?: string;
-  emptyValue?: T;
+  emptyValue?: TValue;
   step?: Step;
   group?: FormFieldGroup;
-  defaultValue?: T;
+  defaultValue?: TValue;
 };
 
-export const useForm = () => {
+export type FormBase = Record<string, unknown>;
+export type FormErrors<TForm extends FormBase = FormBase> = {
+  [key in keyof TForm]: string | undefined;
+};
+
+export const useForm = <
+  TForm extends FormBase = FormBase,
+  TGroup extends string = string,
+>() => {
   const stepper = useStepper();
 
-  const fields = useRef<FormField[]>([]);
+  const fields = useRef<FormField<TForm[keyof TForm], TForm>[]>([]);
 
-  const [values, setValues] = useState<Record<string, unknown>>({});
-  const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+  const [values, setValues] = useState({} as TForm);
+  const [errors, setErrors] = useState({} as FormErrors<TForm>);
 
   const hasSubmitted = useRef(false);
 
-  const getFieldByName = useCallback((name: string) => {
+  const getFieldByName = useCallback((name: keyof TForm) => {
     const field = fields.current.find((field) => field.name === name);
     return field;
   }, []);
 
   const register = useCallback(
-    <T>(newField: FormField<T>) => {
+    (newField: FormField<TForm[keyof TForm], TForm>) => {
       const { name, emptyValue, defaultValue } = newField;
 
       const hasField = !!getFieldByName(name);
@@ -44,29 +55,30 @@ export const useForm = () => {
 
       if (hasField) {
         fields.current = fields.current.map((field) =>
-          field.name === name
-            ? ({ ...field, ...newField } as FormField<unknown>)
-            : field,
+          field.name === name ? { ...field, ...newField } : field,
         );
       } else {
         setValues((values) => ({
           ...values,
           [name]: initialValue,
         }));
-        fields.current = [...fields.current, newField as FormField<unknown>];
+        fields.current = [...fields.current, newField];
       }
 
-      validate(name, initialValue);
+      validate(name, initialValue as TForm[keyof TForm]);
     },
     [getFieldByName],
   );
 
-  const unregister = (names: string | string[], group?: FormFieldGroup) => {
+  const unregister = (
+    names: keyof TForm | (keyof TForm)[],
+    group?: FormFieldGroup,
+  ) => {
     const baseNames = Array.isArray(names) ? names : [names];
     const steps = new Set<Step>();
 
     for (const baseName of baseNames) {
-      const name = getFieldName(baseName, group);
+      const name = getFieldName(String(baseName), group);
       const removedField = fields.current.find((field) => field.name === name);
 
       if (!removedField) {
@@ -89,20 +101,26 @@ export const useForm = () => {
     }
   };
 
-  const getValue = <T>(baseName: string, group?: FormFieldGroup) => {
-    const name = getFieldName(baseName, group);
-    const value = values[name];
+  const getValue = <TKey extends keyof TForm>(
+    baseName: TKey,
+    group?: FormFieldGroup,
+  ): TForm[TKey] => {
+    const name = getFieldName(String(baseName), group);
+    const value = values[name] as TForm[TKey];
 
-    return value as T;
+    return value;
   };
 
-  const setValue = <T>(name: string, value: T) => {
+  const setValue = <TKey extends keyof TForm>(
+    name: TKey,
+    value: TForm[TKey],
+  ) => {
     setValues((values) => ({ ...values, [name]: value }));
 
     return value;
   };
 
-  const clearValue = (name: string) => {
+  const clearValue = (name: keyof TForm) => {
     const field = getFieldByName(name);
     if (!field) {
       return;
@@ -111,8 +129,8 @@ export const useForm = () => {
     setValues((values) => ({ ...values, [name]: field.emptyValue }));
   };
 
-  const clearGroupValue = (groupName: string) => {
-    const clearedValues: Record<string, unknown> = {};
+  const clearGroupValue = (groupName: TGroup) => {
+    const clearedValues = {} as Partial<TForm>;
 
     for (const field of fields.current) {
       const { name, group, emptyValue } = field;
@@ -133,7 +151,10 @@ export const useForm = () => {
     return error;
   };
 
-  const checkField = (field: FormField, value: unknown) => {
+  const checkField = <TValue extends TForm[keyof TForm]>(
+    field: FormField<TValue, TForm>,
+    value: TValue,
+  ) => {
     const { name, label, isRequired, customValidation } = field;
 
     if (isRequired) {
@@ -146,7 +167,7 @@ export const useForm = () => {
         const errorMessage =
           typeof isRequired === "string"
             ? isRequired
-            : `Please enter the ${label ?? name}`;
+            : `Please enter the ${label ?? String(name)}`;
 
         return errorMessage;
       }
@@ -163,9 +184,9 @@ export const useForm = () => {
     return undefined;
   };
 
-  const validateStep = (
+  const validateStep = <TKey extends keyof TForm>(
     step: Step,
-    newValue?: { name: string; value: unknown },
+    newValue?: { name: TKey; value: TForm[TKey] },
   ) => {
     if (!Object.keys(stepper).length) {
       return;
@@ -179,7 +200,7 @@ export const useForm = () => {
 
       // this prevents delayed states
       // since "validate" is called after setValue, the values object is stale for the "name" key
-      let value: unknown = undefined;
+      let value = undefined as TForm[typeof name];
       if (newValue && newValue.name === name) {
         value = newValue.value;
       } else {
@@ -197,7 +218,10 @@ export const useForm = () => {
     setStepStatus(step, "success");
   };
 
-  const validate = <T = unknown>(name: string, value: T) => {
+  const validate = <TKey extends keyof TForm>(
+    name: TKey,
+    value: TForm[TKey],
+  ) => {
     if (!hasSubmitted.current) {
       return;
     }
@@ -217,16 +241,16 @@ export const useForm = () => {
   };
 
   const handleSubmit = (
-    onSuccess?: (values: Record<string, unknown>) => void,
-    onError?: (errors: Record<string, string>) => void,
+    onSuccess?: (values: TForm) => void,
+    onError?: (errors: FormErrors<TForm>) => void,
   ) => {
     return (e: { preventDefault: VoidFunction }) => {
       e.preventDefault();
       hasSubmitted.current = true;
 
       const steps = new Set<Step>();
-      const values: Record<string, unknown> = {};
-      const errors: Record<string, string> = {};
+      const values = {} as TForm;
+      const errors = {} as FormErrors<TForm>;
 
       for (const field of fields.current) {
         const { name, step, group } = field;
@@ -255,15 +279,12 @@ export const useForm = () => {
         let groupValue = values[group.name] as GroupValue | undefined;
 
         if (!groupValue) {
-          values[group.name] = new Map<
-            string | number,
-            Record<string, unknown>
-          >();
+          (values as FormBase)[group.name] = new Map<number, FormBase>();
 
           groupValue = values[group.name] as GroupValue;
         }
 
-        const valueKey = getBaseFieldNameFromGroup(name);
+        const valueKey = getBaseFieldNameFromGroup(String(name));
 
         groupValue.set(group.key, {
           ...groupValue.get(group.key),
@@ -297,10 +318,10 @@ export const useForm = () => {
           continue;
         }
 
-        values[key] = [...value.values()];
+        (values as FormBase)[key] = [...value.values()];
       }
 
-      setErrors({});
+      setErrors({} as FormErrors<TForm>);
       onSuccess?.(values);
     };
   };
@@ -319,4 +340,7 @@ export const useForm = () => {
   };
 };
 
-export type Form = ReturnType<typeof useForm>;
+export type Form<
+  TForm extends FormBase = FormBase,
+  TGroup extends string = string,
+> = ReturnType<typeof useForm<TForm, TGroup>>;

@@ -10,6 +10,7 @@ import { TextInput } from "@/components/molecules/text-input";
 import type { FormFieldGroup } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { useMemo, useState } from "react";
+import type { CreateEventFormData } from "../create-event-form";
 
 const groupName = "taxesFees";
 
@@ -29,7 +30,7 @@ type TaxFeeRow = {
   onRemoveClick: () => void;
 };
 const TaxFeeRow = ({ fieldKey, onRemoveClick }: TaxFeeRow) => {
-  const { form } = useFormProvider();
+  const { form } = useFormProvider<CreateEventFormData>();
 
   const group: FormFieldGroup = useMemo<FormFieldGroup>(
     () => ({
@@ -44,7 +45,7 @@ const TaxFeeRow = ({ fieldKey, onRemoveClick }: TaxFeeRow) => {
   }
   const { getValue } = form;
 
-  const type = getValue<SelectInputItem | undefined>("type", group);
+  const type = getValue("type", group);
   const isPercent = type?.value === "percent";
 
   return (

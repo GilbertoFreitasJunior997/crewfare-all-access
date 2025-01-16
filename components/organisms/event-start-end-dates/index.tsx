@@ -9,6 +9,10 @@ import { useFormProvider } from "@/hooks/use-form-provider";
 import { useMemo, useState } from "react";
 import type { DateInterval } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
+import type {
+  CreateEventFormData,
+  CreateEventFormGroups,
+} from "../create-event-form";
 
 export const eventStartEndDatesGroupName = "eventStartEndDates";
 const fieldName = "date";
@@ -66,7 +70,10 @@ export const EventStartEndDates = ({
   hasBookableRange,
   disabledDates,
 }: EventStartEndDatesProps) => {
-  const { form } = useFormProvider();
+  const { form } = useFormProvider<
+    CreateEventFormData,
+    CreateEventFormGroups
+  >();
 
   const [dateRangeRows, setDateRangeRows] = useState<number[]>([
     new Date().getMilliseconds(),

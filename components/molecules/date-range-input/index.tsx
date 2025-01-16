@@ -17,6 +17,7 @@ import { type ComponentRef, memo, useRef } from "react";
 import type { DateInterval, DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 
+export type DateRangeInputValue = DateRange | undefined;
 // inner is extracted so it can use hooks at top level
 const Inner = ({
   name,
@@ -25,7 +26,7 @@ const Inner = ({
   className,
   disabled,
   inputBoxClassName,
-}: DateRangeInputProps & InputProviderRenderProps<DateRange | undefined>) => {
+}: DateRangeInputProps & InputProviderRenderProps<DateRangeInputValue>) => {
   const { form } = useFormProvider();
   const hasError = !!form?.getError(name);
 
@@ -88,7 +89,7 @@ const Inner = ({
   );
 };
 
-export type DateRangeInputProps = InputBase<DateRange | undefined> & {
+export type DateRangeInputProps = InputBase<DateRangeInputValue> & {
   className?: string;
   disabled?: DateInterval;
 };

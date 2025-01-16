@@ -1,6 +1,7 @@
 import { Container } from "@/components/atoms/container";
 import { DateRangeInput } from "@/components/molecules/date-range-input";
 import { StepContent } from "@/components/molecules/step-content";
+import type { CreateEventFormData } from "@/components/organisms/create-event-form";
 import {
   EventStartEndDates,
   eventStartEndDatesGroupName,
@@ -9,12 +10,12 @@ import { TaxFees } from "@/components/organisms/tax-fees";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
 import { useMemo } from "react";
-import type { DateInterval, DateRange } from "react-day-picker";
+import type { DateInterval } from "react-day-picker";
 
 export const DatesStep = () => {
-  const { form } = useFormProvider();
+  const { form } = useFormProvider<CreateEventFormData>();
 
-  const bookableRange = form?.getValue<DateRange>("bookableDates");
+  const bookableRange = form?.getValue("bookableDates");
   const hasBookableRange = !!(bookableRange?.from && bookableRange?.to);
   const disabledDates = useMemo<DateInterval | undefined>(
     () =>
