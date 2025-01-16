@@ -1,10 +1,12 @@
 import "../app/globals.css";
 import type { Preview } from "@storybook/react";
+import { themes } from "@storybook/theming";
 
 const preview: Preview = {
   parameters: {
     docs: {
       toc: true,
+      theme: themes.dark,
     },
     controls: {
       matchers: {
