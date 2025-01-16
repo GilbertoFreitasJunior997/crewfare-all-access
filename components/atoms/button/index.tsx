@@ -1,5 +1,5 @@
-import { VariantProps, cva } from "class-variance-authority";
-import { ButtonHTMLAttributes, PropsWithChildren } from "react";
+import { type VariantProps, cva } from "class-variance-authority";
+import type { ButtonHTMLAttributes, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 const variants = cva(

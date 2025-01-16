@@ -3,35 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --primary: 249 100% 57%;
-  --secondary: 240 2% 19%;
-  --background: 240 3% 12%;
-  --background-accent: 240 5% 8%;
-  --foreground: 0 0% 100%;
-  --border: 0 0% 33%;
-  --placeholder: 0 0% 64%;
-  --accent: 155 90% 64%;
-  --danger: 6 78% 57%;
-  --danger-foreground: 7 100% 67%;
+	--primary: 249 100% 57%;
+	--secondary: 240 2% 19%;
+	--background: 240 3% 12%;
+	--background-accent: 240 5% 8%;
+	--foreground: 0 0% 100%;
+	--border: 0 0% 33%;
+	--placeholder: 0 0% 64%;
+	--accent: 155 90% 64%;
+	--danger: 6 78% 57%;
+	--danger-foreground: 7 100% 67%;
 }
-
 
 @layer base {
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 
-  input[type=number] {
-    -moz-appearance: textfield;
-    appearance: textfield;
-  }
+	input[type="number"] {
+		-moz-appearance: textfield;
+		appearance: textfield;
+	}
 
-
-  body {
-    font-family: Poppins, Helvetica, sans-serif;
-    @apply antialiased bg-background text-foreground;
-  }
+	body {
+		font-family: Poppins, Helvetica, sans-serif;
+		@apply antialiased bg-background text-foreground;
+	}
 }
-

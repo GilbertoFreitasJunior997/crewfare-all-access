@@ -1,7 +1,7 @@
 "use client";
 
-import { PropsWithChildren, createContext } from "react";
-import { Step } from "../stepper-provider";
+import { type PropsWithChildren, createContext } from "react";
+import type { Step } from "../stepper-provider";
 
 export type StepContextValue = {
   step: Step;

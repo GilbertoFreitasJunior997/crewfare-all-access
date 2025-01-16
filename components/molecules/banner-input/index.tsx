@@ -5,9 +5,9 @@ import { DropIndicatorIcon } from "@/components/atoms/drop-indicator-icon";
 import { InputContainer } from "@/components/atoms/input-container";
 import { InputLabel } from "@/components/atoms/input-label";
 import {
-  InputBase,
+  type InputBase,
   InputProvider,
-  InputProviderRenderProps,
+  type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { memo, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";

@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { InputError } from "../input-error";
 
 export type InputContainerProps = PropsWithChildren & {

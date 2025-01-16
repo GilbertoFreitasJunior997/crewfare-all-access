@@ -5,15 +5,15 @@ import { Calendar } from "@/components/atoms/calendar";
 import { InputContainer } from "@/components/atoms/input-container";
 import { InputLabel } from "@/components/atoms/input-label";
 import {
-  InputBase,
+  type InputBase,
   InputProvider,
-  InputProviderRenderProps,
+  type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { Popover } from "@/components/atoms/popover";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
-import { ElementRef, memo, useRef } from "react";
-import { DateInterval, DateRange } from "react-day-picker";
+import { type ElementRef, memo, useRef } from "react";
+import type { DateInterval, DateRange } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 
 // inner is extracted so it can use hooks at top level

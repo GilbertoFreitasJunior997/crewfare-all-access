@@ -3,14 +3,14 @@
 import { InputContainer } from "@/components/atoms/input-container";
 import { InputLabel } from "@/components/atoms/input-label";
 import {
-  InputBase,
+  type InputBase,
   InputProvider,
-  InputProviderRenderProps,
+  type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { SelectInputItem } from "@/components/atoms/select-input-item";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import { ElementRef, memo, useRef } from "react";
+import { type ElementRef, memo, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 const Inner = ({

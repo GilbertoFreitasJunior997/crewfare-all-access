@@ -1,7 +1,7 @@
 "use client";
 
-import { Form } from "@/hooks/use-form";
-import { PropsWithChildren, createContext } from "react";
+import type { Form } from "@/hooks/use-form";
+import { type PropsWithChildren, createContext } from "react";
 
 export type FormContextValues = {
   form: Form;

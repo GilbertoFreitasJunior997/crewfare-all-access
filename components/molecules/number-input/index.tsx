@@ -3,12 +3,12 @@
 import { InputContainer } from "@/components/atoms/input-container";
 import { InputLabel } from "@/components/atoms/input-label";
 import {
-  InputBase,
+  type InputBase,
   InputProvider,
-  InputProviderRenderProps,
+  type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import { ChangeEvent, memo, useState } from "react";
+import { type ChangeEvent, memo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const Inner = ({

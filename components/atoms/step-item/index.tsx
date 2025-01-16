@@ -2,7 +2,7 @@ import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 import { AlertIcon } from "../alert-icon";
 import { StepCheckIcon } from "../step-check-icon";
-import { Step, StepStatus } from "../stepper-provider";
+import type { Step, StepStatus } from "../stepper-provider";
 
 export type StepItemProps = {
   index: number;

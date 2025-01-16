@@ -1,11 +1,11 @@
 "use client";
 
-import { FormFieldGroup } from "@/hooks/use-form";
+import type { FormFieldGroup } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { getFieldName } from "@/hooks/use-form/utils";
 import { useInputBox } from "@/hooks/use-input-box";
 import { useStep } from "@/hooks/use-step";
-import { ReactNode, createContext, useEffect, useRef } from "react";
+import { type ReactNode, createContext, useEffect, useRef } from "react";
 
 export const inputValidationDebounceTimerMs = 260;
 

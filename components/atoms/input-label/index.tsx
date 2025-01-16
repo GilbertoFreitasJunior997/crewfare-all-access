@@ -1,7 +1,7 @@
 "use client";
 
 import { useInput } from "@/hooks/use-input";
-import { LabelHTMLAttributes, MouseEvent, memo } from "react";
+import { type LabelHTMLAttributes, type MouseEvent, memo } from "react";
 import { twMerge } from "tailwind-merge";
 import { InfoIcon } from "../info-icon";
 import { Tooltip } from "../tooltip";

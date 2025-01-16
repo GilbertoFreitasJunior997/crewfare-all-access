@@ -1,7 +1,7 @@
 "use client";
 
-import { InputRules } from "@/components/atoms/input-provider";
-import { Step } from "@/components/atoms/stepper-provider";
+import type { InputRules } from "@/components/atoms/input-provider";
+import type { Step } from "@/components/atoms/stepper-provider";
 import { useCallback, useRef, useState } from "react";
 import { useStepper } from "../use-stepper";
 import { getBaseFieldNameFromGroup, getFieldName } from "./utils";

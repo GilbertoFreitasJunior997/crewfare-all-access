@@ -2,12 +2,12 @@
 
 import { AddRowButton } from "@/components/atoms/add-row-button";
 import { inputLabelClassName } from "@/components/atoms/input-label";
-import { SelectInputItem } from "@/components/atoms/select-input-item";
+import type { SelectInputItem } from "@/components/atoms/select-input-item";
 import { TrashButton } from "@/components/atoms/trash-button";
 import { NumberInput } from "@/components/molecules/number-input";
 import { SelectInput } from "@/components/molecules/select-input";
 import { TextInput } from "@/components/molecules/text-input";
-import { FormFieldGroup } from "@/hooks/use-form";
+import type { FormFieldGroup } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { useMemo, useState } from "react";
 

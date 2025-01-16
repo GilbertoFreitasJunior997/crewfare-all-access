@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { DayPicker, DayPickerProps } from "react-day-picker";
+import { DayPicker, type DayPickerProps } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 
 export const Calendar = (props: DayPickerProps) => {

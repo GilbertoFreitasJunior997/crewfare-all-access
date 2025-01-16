@@ -9,7 +9,7 @@ import { TaxFees } from "@/components/organisms/tax-fees";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
 import { useMemo } from "react";
-import { DateInterval, DateRange } from "react-day-picker";
+import type { DateInterval, DateRange } from "react-day-picker";
 
 export const DatesStep = () => {
   const { form } = useFormProvider();

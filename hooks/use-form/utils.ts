@@ -1,4 +1,4 @@
-import { FormFieldGroup } from ".";
+import type { FormFieldGroup } from ".";
 
 const fieldNameGroupSeparator = "__";
 

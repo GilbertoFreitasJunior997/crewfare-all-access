@@ -1,5 +1,5 @@
 import { PlusIcon } from "lucide-react";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type AddRowButtonProps = PropsWithChildren & {

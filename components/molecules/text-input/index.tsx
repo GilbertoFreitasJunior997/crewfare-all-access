@@ -2,8 +2,11 @@
 
 import { InputContainer } from "@/components/atoms/input-container";
 import { InputLabel } from "@/components/atoms/input-label";
-import { InputBase, InputProvider } from "@/components/atoms/input-provider";
-import { ChangeEvent, memo } from "react";
+import {
+  type InputBase,
+  InputProvider,
+} from "@/components/atoms/input-provider";
+import { type ChangeEvent, memo } from "react";
 
 export type TextInputProps = InputBase<string> & {
   className?: string;

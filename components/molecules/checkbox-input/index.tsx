@@ -1,6 +1,9 @@
 import { CheckIcon } from "@/components/atoms/check-icon";
 import { InputLabel } from "@/components/atoms/input-label";
-import { InputBase, InputProvider } from "@/components/atoms/input-provider";
+import {
+  type InputBase,
+  InputProvider,
+} from "@/components/atoms/input-provider";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { memo } from "react";
 import { twMerge } from "tailwind-merge";

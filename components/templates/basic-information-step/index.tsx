@@ -1,5 +1,5 @@
 import { Container } from "@/components/atoms/container";
-import { SelectInputItem } from "@/components/atoms/select-input-item";
+import type { SelectInputItem } from "@/components/atoms/select-input-item";
 import { ToggleButton } from "@/components/atoms/toggle-button";
 import { BannerInput } from "@/components/molecules/banner-input";
 import { CheckboxInput } from "@/components/molecules/checkbox-input";
