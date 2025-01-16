@@ -2,6 +2,7 @@
 
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { useInputBox } from "@/hooks/use-input-box";
+import { useStep } from "@/hooks/use-step";
 import { ReactNode, createContext, useEffect, useRef } from "react";
 
 export const inputValidationDebounceTimerMs = 260;
@@ -46,6 +47,8 @@ export const InputProvider = <T,>({
   children,
 }: InputProviderProps<T>) => {
   const { form } = useFormProvider();
+  const providedStep = useStep();
+
   const debounceTimeout = useRef<ReturnType<typeof setTimeout>>(null);
 
   const handleChange = (newValue: T | undefined) => {
@@ -76,8 +79,9 @@ export const InputProvider = <T,>({
       label,
       emptyValue,
       isRequired,
+      step: providedStep.step ?? undefined,
     });
-  }, [form?.register, name, label, emptyValue, isRequired]);
+  }, [form?.register, name, label, emptyValue, isRequired, providedStep?.step]);
 
   const value = form ? (form.getValue<T>(name) ?? emptyValue) : controlledValue;
   const { inputBoxClassName } = useInputBox({ name });

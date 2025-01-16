@@ -13,6 +13,8 @@ export type Step = {
   render?: FC;
 };
 
+export type StepStatus = "indeterminate" | "success" | "error";
+
 export type StepperContextValue = {
   currentStep: Step;
   steps: Step[];
@@ -21,6 +23,8 @@ export type StepperContextValue = {
   goToNextStep: () => void;
   goToPreviousStep: () => void;
   goToStep: (step: Step) => void;
+  getStepStatus: (step: Step) => StepStatus;
+  setStepStatus: (step: Step, status: StepStatus) => void;
 };
 export const StepperContext = createContext({} as StepperContextValue);
 
@@ -30,6 +34,9 @@ export type StepperProviderProps = PropsWithChildren & {
 
 export const StepperProvider = ({ steps, children }: StepperProviderProps) => {
   const [currentStep, setCurrentStep] = useState(steps[0]);
+  const [stepsStatus, setStepsStatus] = useState<Map<Step, StepStatus>>(
+    new Map(steps.map((step) => [step, "indeterminate"])),
+  );
 
   const currentStepIndex = steps.indexOf(currentStep);
   const hasNextStep = currentStepIndex < steps.length - 1;
@@ -57,6 +64,21 @@ export const StepperProvider = ({ steps, children }: StepperProviderProps) => {
     setCurrentStep(previousStep);
   };
 
+  const getStepStatus = (step: Step) => {
+    const status = stepsStatus.get(step);
+
+    return status ?? "indeterminate";
+  };
+
+  const setStepStatus = (step: Step, status: StepStatus) => {
+    setStepsStatus((old) => {
+      const newMap = new Map(old);
+      newMap.set(step, status);
+
+      return newMap;
+    });
+  };
+
   return (
     <StepperContext
       value={{
@@ -67,6 +89,8 @@ export const StepperProvider = ({ steps, children }: StepperProviderProps) => {
         goToNextStep,
         goToPreviousStep,
         goToStep,
+        getStepStatus,
+        setStepStatus,
       }}
     >
       {children}

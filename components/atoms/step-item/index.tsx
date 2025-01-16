@@ -1,16 +1,19 @@
 import { memo } from "react";
 import { twMerge } from "tailwind-merge";
-import { Step } from "../stepper-provider";
+import { AlertIcon } from "../alert-icon";
+import { StepCheckIcon } from "../step-check-icon";
+import { Step, StepStatus } from "../stepper-provider";
 
 export type StepItemProps = {
-  step: Step;
-  isActive: boolean;
   index: number;
+  step: Step;
+  status: StepStatus;
+  isActive: boolean;
   onSelect: (step: Step) => void;
 };
 
 export const StepItem = memo(
-  ({ index, step, isActive, onSelect }: StepItemProps) => {
+  ({ index, step, status, isActive, onSelect }: StepItemProps) => {
     const { name } = step;
 
     const handleClick = () => {
@@ -21,7 +24,7 @@ export const StepItem = memo(
       <li>
         <button
           className={twMerge(
-            "flex items-center gap-3 h-12 px-2 py-3 rounded-lg border cursor-pointer w-full transition-colors",
+            "flex items-center justify-between h-12 px-2 py-3 rounded-lg border cursor-pointer w-full transition-colors",
             isActive
               ? "bg-background border-secondary"
               : "border-transparent hover:bg-background/60",
@@ -29,18 +32,28 @@ export const StepItem = memo(
           onClick={handleClick}
           type="button"
         >
-          <div
-            className={twMerge(
-              "size-6 rounded-full grid place-content-center text-xs font-semibold transition-colors",
-              isActive
-                ? "bg-primary text-white"
-                : "bg-secondary text-placeholder",
-            )}
-          >
-            {index + 1}
+          <div className="flex items-center gap-3">
+            <div
+              className={twMerge(
+                "size-6 rounded-full grid place-content-center text-xs font-semibold transition-colors",
+                isActive
+                  ? "bg-primary text-white"
+                  : status === "success"
+                    ? "bg-accent"
+                    : "bg-secondary text-placeholder",
+              )}
+            >
+              {status === "success" && !isActive ? (
+                <StepCheckIcon />
+              ) : (
+                index + 1
+              )}
+            </div>
+
+            <span className="text-sm">{name}</span>
           </div>
 
-          <span className="text-sm">{name}</span>
+          <div>{status === "error" && <AlertIcon />}</div>
         </button>
       </li>
     );

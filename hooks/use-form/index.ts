@@ -3,6 +3,7 @@
 import { InputRules } from "@/components/atoms/input-provider";
 import { Step } from "@/components/atoms/stepper-provider";
 import { FormEvent, useCallback, useRef, useState } from "react";
+import { useStepper } from "../use-stepper";
 
 export type FormField<T = unknown> = InputRules & {
   name: string;
@@ -12,6 +13,8 @@ export type FormField<T = unknown> = InputRules & {
 };
 
 export const useForm = () => {
+  const stepper = useStepper();
+
   const fields = useRef<FormField[]>([]);
 
   const [values, setValues] = useState<Record<string, unknown>>({});
@@ -80,6 +83,40 @@ export const useForm = () => {
     return undefined;
   };
 
+  const validateStep = (
+    step: Step,
+    newValue?: { name: string; value: unknown },
+  ) => {
+    if (!Object.keys(stepper).length) {
+      return;
+    }
+    const { setStepStatus } = stepper;
+
+    const stepFields = fields.current.filter((field) => field.step === step);
+
+    for (const field of stepFields) {
+      const { name } = field;
+
+      // this prevents delayed states
+      // since "validate" is called after setValue, the values object is stale for the "name" key
+      let value: unknown = undefined;
+      if (newValue && newValue.name === name) {
+        value = newValue.value;
+      } else {
+        value = getValue(name);
+      }
+
+      const error = checkField(field, value);
+
+      if (error) {
+        setStepStatus(step, "error");
+        return;
+      }
+    }
+
+    setStepStatus(step, "success");
+  };
+
   const validate = <T = unknown>(name: string, value: T) => {
     if (!hasSubmitted.current) {
       return;
@@ -92,6 +129,11 @@ export const useForm = () => {
     const error = checkField(field, value);
 
     setErrors((errors) => ({ ...errors, [name]: error }));
+
+    if (!field.step) {
+      return;
+    }
+    validateStep(field.step, { name, value });
   };
 
   const handleSubmit = (
@@ -101,14 +143,19 @@ export const useForm = () => {
       e.preventDefault();
       hasSubmitted.current = true;
 
+      const steps = new Set<Step>();
       const values: Record<string, unknown> = {};
       const errors: Record<string, string> = {};
 
       for (const field of fields.current) {
-        const { name } = field;
-        const value = getValue(field.name);
+        const { name, step } = field;
+        if (step) {
+          steps.add(step);
+        }
 
+        const value = getValue(field.name);
         const error = checkField(field, value);
+
         if (error) {
           errors[name] = error;
         }
@@ -120,7 +167,18 @@ export const useForm = () => {
 
       if (hasErrors) {
         setErrors(errors);
+        for (const step of steps) {
+          validateStep(step);
+        }
         return;
+      }
+
+      if (Object.keys(stepper).length) {
+        const { setStepStatus } = stepper;
+
+        for (const step of steps) {
+          setStepStatus(step, "success");
+        }
       }
 
       setErrors({});

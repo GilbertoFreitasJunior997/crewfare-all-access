@@ -11,7 +11,7 @@ export type StepperProps = {
 };
 
 export const Stepper = memo(({ title }: StepperProps) => {
-  const { steps, currentStep, goToStep } = useStepper();
+  const { steps, currentStep, goToStep, getStepStatus } = useStepper();
   const [isExpanded, setIsExpanded] = useState(true);
 
   const handleToggleExpanded = () => {
@@ -41,12 +41,14 @@ export const Stepper = memo(({ title }: StepperProps) => {
         <ul className="space-y-px">
           {steps.map((step, index) => {
             const isActive = currentStep === step;
+            const status = getStepStatus(step);
 
             return (
               <StepItem
                 key={step.name}
                 index={index}
                 step={step}
+                status={status}
                 isActive={isActive}
                 onSelect={goToStep}
               />
