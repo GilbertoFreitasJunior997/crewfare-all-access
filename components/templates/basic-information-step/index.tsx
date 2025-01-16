@@ -32,10 +32,18 @@ export function BasicInformationStep() {
     return null;
   }
 
-  const { getValue } = form;
+  const { getValue, clearValue } = form;
 
   const hasBannerOverlayTitle = getValue("hasBannerOverlayTitle");
   const overlayTitle = getValue("overlayTitle");
+
+  const handleHasOverlayTitleChange = (isChecked: boolean) => {
+    if (isChecked) {
+      return;
+    }
+
+    clearValue("overlayTitle");
+  };
 
   return (
     <StepContent step={steps[0]}>
@@ -74,6 +82,7 @@ export function BasicInformationStep() {
           name="hasBannerOverlayTitle"
           label="Overlay Title on Banner"
           className="col-span-2"
+          onChange={handleHasOverlayTitleChange}
         />
 
         <TextInput

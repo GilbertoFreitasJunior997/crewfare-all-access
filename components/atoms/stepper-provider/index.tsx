@@ -70,14 +70,14 @@ export const StepperProvider = ({ steps, children }: StepperProviderProps) => {
     return status ?? "indeterminate";
   };
 
-  const setStepStatus = (step: Step, status: StepStatus) => {
+  const setStepStatus = useCallback((step: Step, status: StepStatus) => {
     setStepsStatus((old) => {
       const newMap = new Map(old);
       newMap.set(step, status);
 
       return newMap;
     });
-  };
+  }, []);
 
   return (
     <StepperContext

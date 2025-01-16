@@ -46,6 +46,104 @@ export const useForm = <
     return field;
   }, []);
 
+  const checkField = useCallback(
+    <TValue extends TForm[keyof TForm]>(
+      field: FormField<TValue, TForm>,
+      value: TValue,
+    ) => {
+      const { name, label, isRequired, customValidation } = field;
+
+      if (isRequired) {
+        const isBoolean = typeof value === "boolean";
+
+        if (
+          !isBoolean &&
+          (typeof value === "number" ? Number.isNaN(value) : !value)
+        ) {
+          const errorMessage =
+            typeof isRequired === "string"
+              ? isRequired
+              : `Please enter the ${label ?? String(name)}`;
+
+          return errorMessage;
+        }
+      }
+
+      if (customValidation) {
+        const errorMessage = customValidation(value);
+
+        if (errorMessage) {
+          return errorMessage;
+        }
+      }
+
+      return undefined;
+    },
+    [],
+  );
+
+  const getValue = useCallback(
+    <TKey extends keyof TForm>(
+      baseName: TKey,
+      group?: FormFieldGroup,
+    ): TForm[TKey] => {
+      const name = getFieldName(String(baseName), group);
+      const value = values[name] as TForm[TKey];
+
+      return value;
+    },
+    [values],
+  );
+
+  const validateStep = useCallback(
+    (step: Step, errors: FormErrors<TForm>) => {
+      const stepFields = fields.current.filter((field) => field.step === step);
+
+      for (const field of stepFields) {
+        const { name } = field;
+
+        const hasError = !!errors[name];
+
+        if (hasError) {
+          stepper?.setStepStatus?.(step, "error");
+          return;
+        }
+      }
+
+      stepper?.setStepStatus?.(step, "success");
+    },
+    [stepper?.setStepStatus],
+  );
+
+  const validate = useCallback(
+    <TKey extends keyof TForm>(name: TKey, preValue = null as TForm[TKey]) => {
+      if (!hasSubmitted.current) {
+        return;
+      }
+
+      const field = getFieldByName(name);
+      if (!field) {
+        return;
+      }
+      const value = preValue === null ? getValue(name) : preValue;
+      const error = checkField(field, value);
+
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors, [name]: error };
+
+        // defer state update (unfortunately there is nested function state updates)
+        setTimeout(() => {
+          if (field.step) {
+            validateStep(field.step, newErrors);
+          }
+        }, 0);
+
+        return newErrors;
+      });
+    },
+    [checkField, getFieldByName, getValue, validateStep],
+  );
+
   const register = useCallback(
     (newField: FormField<TForm[keyof TForm], TForm>) => {
       const { name, emptyValue, defaultValue } = newField;
@@ -57,17 +155,19 @@ export const useForm = <
         fields.current = fields.current.map((field) =>
           field.name === name ? { ...field, ...newField } : field,
         );
+
+        validate(name);
       } else {
         setValues((values) => ({
           ...values,
           [name]: initialValue,
         }));
         fields.current = [...fields.current, newField];
-      }
 
-      validate(name, initialValue as TForm[keyof TForm]);
+        validate(name, initialValue as TForm[keyof TForm]);
+      }
     },
-    [getFieldByName],
+    [getFieldByName, validate],
   );
 
   const unregister = (
@@ -97,18 +197,8 @@ export const useForm = <
     }
 
     for (const step of steps) {
-      validateStep(step);
+      validateStep(step, errors);
     }
-  };
-
-  const getValue = <TKey extends keyof TForm>(
-    baseName: TKey,
-    group?: FormFieldGroup,
-  ): TForm[TKey] => {
-    const name = getFieldName(String(baseName), group);
-    const value = values[name] as TForm[TKey];
-
-    return value;
   };
 
   const setValue = <TKey extends keyof TForm>(
@@ -149,95 +239,6 @@ export const useForm = <
     const error = errors[name];
 
     return error;
-  };
-
-  const checkField = <TValue extends TForm[keyof TForm]>(
-    field: FormField<TValue, TForm>,
-    value: TValue,
-  ) => {
-    const { name, label, isRequired, customValidation } = field;
-
-    if (isRequired) {
-      const isBoolean = typeof value === "boolean";
-
-      if (
-        !isBoolean &&
-        (typeof value === "number" ? Number.isNaN(value) : !value)
-      ) {
-        const errorMessage =
-          typeof isRequired === "string"
-            ? isRequired
-            : `Please enter the ${label ?? String(name)}`;
-
-        return errorMessage;
-      }
-    }
-
-    if (customValidation) {
-      const errorMessage = customValidation(value);
-
-      if (errorMessage) {
-        return errorMessage;
-      }
-    }
-
-    return undefined;
-  };
-
-  const validateStep = <TKey extends keyof TForm>(
-    step: Step,
-    newValue?: { name: TKey; value: TForm[TKey] },
-  ) => {
-    if (!Object.keys(stepper).length) {
-      return;
-    }
-    const { setStepStatus } = stepper;
-
-    const stepFields = fields.current.filter((field) => field.step === step);
-
-    for (const field of stepFields) {
-      const { name } = field;
-
-      // this prevents delayed states
-      // since "validate" is called after setValue, the values object is stale for the "name" key
-      let value = undefined as TForm[typeof name];
-      if (newValue && newValue.name === name) {
-        value = newValue.value;
-      } else {
-        value = getValue(name);
-      }
-
-      const error = checkField(field, value);
-
-      if (error) {
-        setStepStatus(step, "error");
-        return;
-      }
-    }
-
-    setStepStatus(step, "success");
-  };
-
-  const validate = <TKey extends keyof TForm>(
-    name: TKey,
-    value: TForm[TKey],
-  ) => {
-    if (!hasSubmitted.current) {
-      return;
-    }
-
-    const field = getFieldByName(name);
-    if (!field) {
-      return;
-    }
-    const error = checkField(field, value);
-
-    setErrors((errors) => ({ ...errors, [name]: error }));
-
-    if (!field.step) {
-      return;
-    }
-    validateStep(field.step, { name, value });
   };
 
   const handleSubmit = (
@@ -297,7 +298,7 @@ export const useForm = <
       if (hasErrors) {
         setErrors(errors);
         for (const step of steps) {
-          validateStep(step);
+          validateStep(step, errors);
         }
         onError?.(errors);
         return;
