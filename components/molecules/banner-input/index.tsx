@@ -13,6 +13,7 @@ import { useFormProvider } from "@/hooks/use-form-provider";
 import { LoaderCircleIcon } from "lucide-react";
 import { memo, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export type BannerInputValue = {
@@ -41,7 +42,7 @@ const Inner = ({
       return;
     }
     if (file.type !== "image/jpeg" && file.type !== "image/png") {
-      // @TODO toast "incorrect file type"
+      toast.warning("Banner must be jpeg or png");
       return;
     }
     if (isLoading) {
