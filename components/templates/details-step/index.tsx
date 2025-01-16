@@ -29,27 +29,27 @@ export const DetailsStep = () => {
         <TextInput
           name="eventAddress"
           label="Event Address"
-          className="col-span-1"
+          className="col-span-2 md:col-span-1"
           isRequired={true}
         />
         <TextInput
           name="venueName"
           label="Venue Name"
-          className="col-span-1"
+          className="col-span-2 md:col-span-1"
           isRequired={true}
         />
 
         <TextInput
           name="featuredHotelsTitle"
           label="Featured Hotels Title"
-          className="col-span-1"
+          className="col-span-2 md:col-span-1"
           isRequired={true}
           defaultValue="Featured hotels"
         />
         <NumberInput
           name="minimumNights"
           label="Minimum Nights"
-          className="col-span-1"
+          className="col-span-2 md:col-span-1"
           isRequired={true}
           allowIntegersOnly={true}
           min={1}

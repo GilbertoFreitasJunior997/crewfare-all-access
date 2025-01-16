@@ -9,7 +9,7 @@ export const Calendar = (props: DayPickerProps) => {
       showOutsideDays={true}
       className="p-3"
       classNames={{
-        months: "flex gap-1 justify-center",
+        months: "flex gap-1 justify-center flex-col md:flex-row",
         month: "space-y-2",
         month_caption: "text-center",
         caption_label: "text-sm font-semibold",

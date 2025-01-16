@@ -22,7 +22,7 @@ export const Stepper = memo(({ title }: StepperProps) => {
     <aside
       className={twMerge(
         isExpanded ? "h-[68px]" : "h-full",
-        "overflow-hidden md:h-full w-full bg-background-accent p-5",
+        "overflow-hidden lg:h-full w-full bg-background-accent p-5",
       )}
     >
       <section className="mb-5 flex items-center justify-between">
@@ -31,7 +31,7 @@ export const Stepper = memo(({ title }: StepperProps) => {
         <button
           type="button"
           onClick={handleToggleExpanded}
-          className="block md:hidden"
+          className="block lg:hidden"
         >
           <MenuIcon />
         </button>

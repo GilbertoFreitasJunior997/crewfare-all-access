@@ -1,8 +1,6 @@
 "use client";
 
 import { FormProvider } from "@/components/atoms/form-provider";
-import { StepperProvider } from "@/components/atoms/stepper-provider";
-import { Header } from "@/components/molecules/header";
 import { StepNavigationFooter } from "@/components/molecules/step-navigation-footer";
 import { Stepper } from "@/components/molecules/stepper";
 import { useForm } from "@/hooks/use-form";
@@ -44,18 +42,12 @@ const MyForm = () => {
 
 export default function Home() {
   return (
-    <StepperProvider steps={steps}>
-      <div className="min-h-screen w-screen flex flex-col">
-        <Header />
+    <div className="grow w-full lg:grid lg:grid-cols-[248px_1fr] lg:pl-[180px]">
+      <Stepper title="Create Event" />
 
-        <div className="grow w-full md:grid md:grid-cols-[248px_1fr]">
-          <Stepper title="Create Event" />
-
-          <main className="h-fit p-5 space-y-2">
-            <MyForm />
-          </main>
-        </div>
-      </div>
-    </StepperProvider>
+      <main className="h-fit p-5 space-y-2">
+        <MyForm />
+      </main>
+    </div>
   );
 }

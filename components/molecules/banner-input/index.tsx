@@ -73,7 +73,7 @@ const Inner = ({
 
       <button
         type="button"
-        className="flex justify-center items-center w-full h-[244px] rounded-2xl select-none cursor-pointer bg-secondary banner-input-dashed-border bg-cover bg-no-repeat bg-center"
+        className="flex justify-center items-center w-full h-[244px] rounded-2xl select-none cursor-pointer bg-secondary banner-input-dashed-border bg-cover bg-no-repeat bg-center overflow-hidden"
         {...getRootProps()}
         style={{
           backgroundImage: imageUrl ? `url(${imageUrl})` : undefined,

@@ -1,3 +1,5 @@
+"use client";
+
 import { InputContainer } from "@/components/atoms/input-container";
 import { InputLabel } from "@/components/atoms/input-label";
 import {

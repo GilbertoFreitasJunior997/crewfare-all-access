@@ -48,13 +48,13 @@ export function BasicInformationStep() {
           name="eventType"
           label="Event Type"
           items={eventTypes}
-          className="col-span-1"
+          className="col-span-2 md:col-span-1"
           isRequired={true}
         />
         <TextInput
           name="eventName"
           label="Event Name"
-          className="col-span-1"
+          className="col-span-2 md:col-span-1"
           isRequired={true}
         />
         <BannerInput

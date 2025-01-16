@@ -1,3 +1,5 @@
+"use client";
+
 import { AddRowButton } from "@/components/atoms/add-row-button";
 import { inputLabelClassName } from "@/components/atoms/input-label";
 import { SelectInputItem } from "@/components/atoms/select-input-item";
