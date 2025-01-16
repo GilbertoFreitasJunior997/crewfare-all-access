@@ -10,6 +10,7 @@ const meta: Meta<typeof Button> = {
     children: "Click me!",
     isDisabled: false,
     size: "default",
+    type: "button",
     onClick: fn(),
   },
   argTypes: {
@@ -32,11 +33,24 @@ const meta: Meta<typeof Button> = {
     children: {
       control: { type: "text" },
     },
+    type: {
+      control: {
+        type: "select",
+      },
+    },
+    className: {
+      control: {
+        disable: true,
+      },
+    },
+    onClick: {
+      table: {
+        category: "Events",
+        disable: false,
+      },
+    },
   },
   parameters: {
-    controls: {
-      exclude: ["type", "className", "onClick"],
-    },
     docs: {
       description: {
         component:
@@ -49,11 +63,7 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
-  args: {
-    variant: "primary",
-  },
-};
+export const Default: Story = {};
 
 export const Secondary: Story = {
   args: {
