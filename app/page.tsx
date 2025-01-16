@@ -16,19 +16,15 @@ const TestStepRender = () => {
   }
 
   return steps.map((step) => {
-    const Render = step.render;
+    const Component = step.component;
     const isActive = step === currentStep;
-
-    if (!Render) {
-      return null;
-    }
 
     return (
       <div
         key={step.name}
         className={isActive ? "" : "hidden"}
       >
-        <Render />
+        <Component />
       </div>
     );
   });
@@ -62,7 +58,7 @@ export default function Home() {
         <div className="grow w-full md:grid md:grid-cols-[248px_1fr]">
           <Stepper title="Create Event" />
 
-          <main className="h-fit p-5">
+          <main className="h-fit p-5 space-y-2">
             <MyForm />
           </main>
         </div>

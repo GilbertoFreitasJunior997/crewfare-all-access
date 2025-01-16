@@ -39,7 +39,7 @@ export function BasicInformationStep() {
 
   return (
     <StepContent step={steps[0]}>
-      <Container className="grid grid-cols-2 gap-5">
+      <Container className="grid grid-cols-2">
         <div className="col-span-2 flex items-center justify-center">
           <ToggleButton options={toggleOptions} />
         </div>

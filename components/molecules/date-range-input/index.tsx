@@ -46,7 +46,11 @@ const Inner = ({
         >
           <Button
             variant="secondary"
-            className={twMerge(inputBoxClassName, "justify-between")}
+            className={twMerge(
+              inputBoxClassName,
+              "justify-between",
+              value ? "" : "text-placeholder",
+            )}
           >
             {value ? (
               <>

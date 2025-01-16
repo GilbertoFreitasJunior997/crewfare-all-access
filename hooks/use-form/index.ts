@@ -4,12 +4,19 @@ import { InputRules } from "@/components/atoms/input-provider";
 import { Step } from "@/components/atoms/stepper-provider";
 import { FormEvent, useCallback, useRef, useState } from "react";
 import { useStepper } from "../use-stepper";
+import { getBaseFieldNameFromGroup, getFieldName } from "./utils";
+
+export type FormFieldGroup = {
+  name: string;
+  key: number | string;
+};
 
 export type FormField<T = unknown> = InputRules<T> & {
   name: string;
   label?: string;
   emptyValue?: T;
   step?: Step;
+  group?: FormFieldGroup;
 };
 
 export const useForm = () => {
@@ -49,7 +56,36 @@ export const useForm = () => {
     [getFieldByName],
   );
 
-  const getValue = <T>(name: string) => {
+  const unregister = (names: string | string[], group?: FormFieldGroup) => {
+    const baseNames = Array.isArray(names) ? names : [names];
+    const steps = new Set<Step>();
+
+    for (const baseName of baseNames) {
+      const name = getFieldName(baseName, group);
+      const removedField = fields.current.find((field) => field.name === name);
+
+      if (!removedField) {
+        return;
+      }
+
+      if (removedField.step) {
+        steps.add(removedField.step);
+      }
+
+      fields.current = fields.current.filter((field) => field !== removedField);
+    }
+
+    if (!hasSubmitted.current) {
+      return;
+    }
+
+    for (const step of steps) {
+      validateStep(step);
+    }
+  };
+
+  const getValue = <T>(baseName: string, group?: FormFieldGroup) => {
+    const name = getFieldName(baseName, group);
     const value = values[name];
 
     return value as T;
@@ -159,7 +195,7 @@ export const useForm = () => {
       const errors: Record<string, string> = {};
 
       for (const field of fields.current) {
-        const { name, step } = field;
+        const { name, step, group } = field;
         if (step) {
           steps.add(step);
         }
@@ -171,7 +207,34 @@ export const useForm = () => {
           errors[name] = error;
         }
 
-        values[name] = value;
+        if (!group) {
+          values[name] = value;
+          continue;
+        }
+
+        // if its an group (like tax/fee)
+        // sets the value as an map, where the key is the group key (like the first row)
+        // then sets the value for the key as an object containing the "columns" (fields) of that row
+        // later, this map is turned to an array
+        // an array isn't used here because it needs to keep track of the unique keys (row "id")
+        type GroupValue = Map<string | number, Record<string, unknown>>;
+        let groupValue = values[group.name] as GroupValue | undefined;
+
+        if (!groupValue) {
+          values[group.name] = new Map<
+            string | number,
+            Record<string, unknown>
+          >();
+
+          groupValue = values[group.name] as GroupValue;
+        }
+
+        const valueKey = getBaseFieldNameFromGroup(name);
+
+        groupValue.set(group.key, {
+          ...groupValue.get(group.key),
+          [valueKey]: value,
+        });
       }
 
       const hasErrors = !!Object.keys(errors).length;
@@ -192,6 +255,16 @@ export const useForm = () => {
         }
       }
 
+      // converts the maps into arrays, ignoring their keys ("row id")
+      for (const key in values) {
+        const value = values[key];
+        if (!(value instanceof Map)) {
+          continue;
+        }
+
+        values[key] = [...value.values()];
+      }
+
       setErrors({});
       onSuccess(values);
     };
@@ -200,6 +273,7 @@ export const useForm = () => {
   return {
     fields,
     register,
+    unregister,
     getValue,
     setValue,
     getError,

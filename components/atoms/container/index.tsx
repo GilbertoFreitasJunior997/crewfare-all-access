@@ -8,7 +8,10 @@ export type ContainerProps = PropsWithChildren & {
 export const Container = ({ className, children }: ContainerProps) => {
   return (
     <section
-      className={twMerge("border border-border rounded-xl p-5", className)}
+      className={twMerge(
+        "border border-border rounded-xl p-5 gap-5",
+        className,
+      )}
     >
       {children}
     </section>

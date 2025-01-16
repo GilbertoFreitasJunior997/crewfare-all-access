@@ -1,6 +1,8 @@
 "use client";
 
+import { FormFieldGroup } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
+import { getFieldName } from "@/hooks/use-form/utils";
 import { useInputBox } from "@/hooks/use-input-box";
 import { useStep } from "@/hooks/use-step";
 import { ReactNode, createContext, useEffect, useRef } from "react";
@@ -10,6 +12,8 @@ export const inputValidationDebounceTimerMs = 260;
 export type InputContextValue = {
   name: string;
   label?: string;
+  showLabel?: boolean;
+  isDisabled?: boolean;
 };
 export const InputContext = createContext({} as InputContextValue);
 
@@ -22,13 +26,16 @@ export type InputRules<T = unknown> = {
 export type InputBase<T> = InputContextValue &
   InputRules<T> & {
     name: string;
+    showLabel?: boolean;
     label?: string;
     value?: T;
     onChange?: (oldValue: T) => void;
+    group?: FormFieldGroup;
   };
 
 // props passed to the children render of the HOC
 export type InputProviderRenderProps<T> = {
+  name: string;
   value: T | undefined;
   onChange: (oldValue: T | undefined) => void;
   inputBoxClassName: string;
@@ -40,22 +47,30 @@ export type InputProviderProps<T> = InputBase<T> & {
   hasValidationDebounce?: boolean;
 };
 export const InputProvider = <T,>({
-  name,
+  name: baseName,
   label,
+  showLabel = true,
   value: controlledValue,
   onChange,
   emptyValue,
   isRequired,
   customValidation,
+  group,
   hasValidationDebounce,
+  isDisabled,
   children,
 }: InputProviderProps<T>) => {
   const { form } = useFormProvider();
   const providedStep = useStep();
+  const name = getFieldName(baseName, group);
 
   const debounceTimeout = useRef<ReturnType<typeof setTimeout>>(null);
 
   const handleChange = (newValue: T | undefined) => {
+    if (isDisabled) {
+      return;
+    }
+
     onChange?.(newValue as T);
 
     if (!form) {
@@ -91,6 +106,7 @@ export const InputProvider = <T,>({
       isRequired,
       step: providedStep.step ?? undefined,
       customValidation,
+      group,
     });
   }, [
     form?.register,
@@ -100,12 +116,14 @@ export const InputProvider = <T,>({
     isRequired,
     providedStep?.step,
     customValidation,
+    group,
   ]);
 
   const value = form ? (form.getValue<T>(name) ?? emptyValue) : controlledValue;
-  const { inputBoxClassName } = useInputBox({ name });
+  const { inputBoxClassName } = useInputBox({ name, isDisabled });
 
   const Input = children({
+    name,
     value,
     onChange: handleChange,
     inputBoxClassName,
@@ -116,6 +134,8 @@ export const InputProvider = <T,>({
       value={{
         name,
         label,
+        showLabel,
+        isDisabled,
       }}
     >
       {Input}

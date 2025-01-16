@@ -17,7 +17,7 @@ const validateLink = (value: string) => {
 export const DetailsStep = () => {
   return (
     <StepContent step={steps[1]}>
-      <Container className="grid grid-cols-2 gap-5">
+      <Container className="grid grid-cols-2">
         <TextInput
           name="link"
           label="Link"

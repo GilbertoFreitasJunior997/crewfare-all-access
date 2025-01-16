@@ -3,8 +3,9 @@ import { useFormProvider } from "../use-form-provider";
 
 export type UseInputBoxParams = {
   name: string;
+  isDisabled?: boolean;
 };
-export const useInputBox = ({ name }: UseInputBoxParams) => {
+export const useInputBox = ({ name, isDisabled }: UseInputBoxParams) => {
   const { form } = useFormProvider();
   const error = form?.getError(name) ?? "";
 
@@ -13,6 +14,7 @@ export const useInputBox = ({ name }: UseInputBoxParams) => {
     error
       ? "bg-danger/10 border-danger"
       : "bg-secondary border-secondary focus:border-border",
+    isDisabled ? "opacity-50 pointer-events-none" : "",
   );
 
   return {

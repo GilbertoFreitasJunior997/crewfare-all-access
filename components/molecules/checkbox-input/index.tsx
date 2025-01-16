@@ -14,9 +14,7 @@ export const CheckboxInput = memo(
       {...props}
       emptyValue={false}
     >
-      {({ value, onChange }) => {
-        const { name } = props;
-
+      {({ name, value, onChange }) => {
         const handleChange = (checked: CheckboxPrimitive.CheckedState) => {
           let newValue = !!checked;
 

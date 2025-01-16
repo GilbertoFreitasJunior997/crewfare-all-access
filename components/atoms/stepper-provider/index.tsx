@@ -10,7 +10,7 @@ import {
 
 export type Step = {
   name: string;
-  render?: FC;
+  component: FC;
 };
 
 export type StepStatus = "indeterminate" | "success" | "error";
