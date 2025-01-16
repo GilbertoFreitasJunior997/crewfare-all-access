@@ -2,15 +2,14 @@
 
 import { Button } from "@/components/atoms/button";
 import { FormProvider } from "@/components/atoms/form-provider";
+import { SelectInputItem } from "@/components/atoms/select-input-item";
 import { StepperProvider } from "@/components/atoms/stepper-provider";
-import { DateRangeInput } from "@/components/molecules/date-range-input";
 import { Header } from "@/components/molecules/header";
+import { SelectInput } from "@/components/molecules/select-input";
 import { Stepper } from "@/components/molecules/stepper";
 import { useForm } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
-import { useState } from "react";
-import { DateRange } from "react-day-picker";
 
 const SampleDisplay = () => {
   const { form } = useFormProvider();
@@ -30,6 +29,21 @@ const SampleDisplay = () => {
   );
 };
 
+const selectItems: SelectInputItem[] = [
+  {
+    label: "First",
+    value: "1",
+  },
+  {
+    label: "Second",
+    value: "2",
+  },
+  {
+    label: "Third",
+    value: "3",
+  },
+];
+
 export default function Home() {
   const form = useForm();
   const { handleSubmit } = form;
@@ -37,8 +51,6 @@ export default function Home() {
   const handleSuccess = (values: unknown) => {
     console.info(values);
   };
-
-  const [range, setRange] = useState<DateRange | undefined>();
 
   return (
     <StepperProvider steps={steps}>
@@ -51,7 +63,10 @@ export default function Home() {
           <main className="h-fit p-5 grid grid-cols-2 gap-6">
             <form onSubmit={handleSubmit(handleSuccess)}>
               <FormProvider form={form}>
-                <DateRangeInput name="CheckboxWithForm" />
+                <SelectInput
+                  name="SelectWithForm"
+                  items={selectItems}
+                />
 
                 <SampleDisplay />
               </FormProvider>
@@ -59,10 +74,9 @@ export default function Home() {
               <Button type="submit"> Submit </Button>
             </form>
 
-            <DateRangeInput
-              name="Checkbox"
-              value={range}
-              onChange={setRange}
+            <SelectInput
+              name="Select"
+              items={selectItems}
             />
           </main>
         </div>
