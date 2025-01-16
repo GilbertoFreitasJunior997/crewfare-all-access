@@ -10,6 +10,7 @@ import {
   type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { Popover } from "@/components/atoms/popover";
+import { useFormProvider } from "@/hooks/use-form-provider";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
 import { type ElementRef, memo, useRef } from "react";
@@ -18,12 +19,16 @@ import { twMerge } from "tailwind-merge";
 
 // inner is extracted so it can use hooks at top level
 const Inner = ({
+  name,
   value,
   onChange,
   className,
   disabled,
   inputBoxClassName,
 }: DateRangeInputProps & InputProviderRenderProps<DateRange | undefined>) => {
+  const { form } = useFormProvider();
+  const hasError = !!form?.getError(name);
+
   const triggerRef = useRef<ElementRef<typeof Popover.Trigger>>(null);
 
   const handleLabelClick = () => {
@@ -51,6 +56,7 @@ const Inner = ({
               inputBoxClassName,
               "justify-between",
               value ? "" : "text-placeholder",
+              hasError ? "hover:bg-danger/15" : "",
             )}
           >
             {value ? (
