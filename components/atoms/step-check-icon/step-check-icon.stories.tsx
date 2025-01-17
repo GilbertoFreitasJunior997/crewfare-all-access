@@ -5,10 +5,10 @@ const meta: Meta<typeof StepCheckIcon> = {
   title: "Design System/Atoms/StepCheckIcon",
   component: StepCheckIcon,
   args: {
-    stroke: "green",
+    fill: "green",
   },
   argTypes: {
-    stroke: {
+    fill: {
       control: {
         type: "color",
       },

@@ -1,15 +1,6 @@
-import type { HasClassName } from "@/lib/types";
+import type { IconCustomProps } from "@/lib/types";
 
-export type CheckIconProps = HasClassName & {
-  /**
-   * Icon color
-   *
-   * @default #1D1D1F
-   */
-  fill?: string;
-};
-
-export const CheckIcon = ({ className, fill = "#1D1D1F" }: CheckIconProps) => (
+export const CheckIcon = ({ className, fill = "#1D1D1F" }: IconCustomProps) => (
   <svg
     width="10"
     height="8"
