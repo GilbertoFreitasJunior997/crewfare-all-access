@@ -31,4 +31,8 @@
 		font-family: Poppins, Helvetica, sans-serif;
 		@apply antialiased bg-background text-foreground;
 	}
+
+	li {
+		@apply list-none;
+	}
 }

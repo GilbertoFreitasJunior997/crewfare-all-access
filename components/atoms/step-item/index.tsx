@@ -5,10 +5,42 @@ import { StepCheckIcon } from "../step-check-icon";
 import type { Step, StepStatus } from "../stepper-provider";
 
 export type StepItemProps = {
+  /**
+   * The index of the step item, used for display.
+   *
+   * @example 1
+   */
   index: number;
+
+  /**
+   * The step data for this item
+   */
   step: Step;
+
+  /**
+   * The current status of the step, which can be one of:
+   * - "indeterminate": The step is in progress.
+   * - "success": The step has been completed successfully.
+   * - "error": There was an error in the step.
+   *
+   * @example "success"
+   */
   status: StepStatus;
+
+  /**
+   * Whether the step is currently active.
+   *
+   * @default false
+   */
   isActive: boolean;
+
+  /**
+   * Callback function to select the step. Triggered when the step is clicked.
+   *
+   * @param step The step being selected.
+   *
+   * @example (step) => { console.log(step) }
+   */
   onSelect: (step: Step) => void;
 };
 
