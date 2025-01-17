@@ -10,6 +10,7 @@ export const Container = ({ className, children }: ContainerProps) => {
         "border border-border rounded-xl p-5 gap-5",
         className,
       )}
+      data-testid="container"
     >
       {children}
     </section>
