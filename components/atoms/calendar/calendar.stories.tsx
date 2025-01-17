@@ -67,12 +67,29 @@ export default meta;
 
 type Story = StoryObj<typeof Calendar>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Default calendar story displaying a single month, allowing the user to select one date.",
+      },
+    },
+  },
+};
 
 export const Range: Story = {
   args: {
     mode: "range",
     numberOfMonths: 2,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This story displays a calendar in range mode, allowing the user to select a start and end date, with two months shown.",
+      },
+    },
   },
 };
 
@@ -81,6 +98,14 @@ export const LimitedPeriod: Story = {
     disabled: {
       before: new Date(),
       after: addDays(new Date(), 30),
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This story shows a calendar with a limited period, where dates before today and after 30 days are disabled.",
+      },
     },
   },
 };
