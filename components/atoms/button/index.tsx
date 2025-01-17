@@ -4,7 +4,7 @@ import type { MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
 
 const variants = cva(
-  "rounded-lg font-bold bg-primary transition-colors flex items-center justify-center",
+  "rounded-lg font-bold bg-primary transition-colors flex items-center justify-center text-nowrap overflow-hidden",
   {
     variants: {
       variant: {
