@@ -6,7 +6,7 @@ import { SelectInput } from "@/components/molecules/select-input";
 import { StepContent } from "@/components/molecules/step-content";
 import { TextInput } from "@/components/molecules/text-input";
 import { ToggleButtonInput } from "@/components/molecules/toggle-button-input";
-import type { CreateEventFormData } from "@/components/organisms/create-event-form";
+import type { CreateEventFormData } from "@/components/templates/create-event-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
 import { twMerge } from "tailwind-merge";

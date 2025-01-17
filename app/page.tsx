@@ -1,5 +1,5 @@
 import { Stepper } from "@/components/molecules/stepper";
-import { CreateEventForm } from "@/components/organisms/create-event-form";
+import { CreateEventForm } from "@/components/templates/create-event-form";
 
 export default function Home() {
   return (

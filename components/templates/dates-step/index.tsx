@@ -1,12 +1,12 @@
 import { Container } from "@/components/atoms/container";
 import { DateRangeInput } from "@/components/molecules/date-range-input";
 import { StepContent } from "@/components/molecules/step-content";
-import type { CreateEventFormData } from "@/components/organisms/create-event-form";
 import {
   EventStartEndDates,
   eventStartEndDatesGroupName,
 } from "@/components/organisms/event-start-end-dates";
 import { TaxFees } from "@/components/organisms/tax-fees";
+import type { CreateEventFormData } from "@/components/templates/create-event-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { steps } from "@/lib/steps";
 import { useMemo } from "react";

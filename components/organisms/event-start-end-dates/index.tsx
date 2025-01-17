@@ -12,7 +12,7 @@ import { twMerge } from "tailwind-merge";
 import type {
   CreateEventFormData,
   CreateEventFormGroups,
-} from "../create-event-form";
+} from "../../templates/create-event-form";
 
 export const eventStartEndDatesGroupName = "eventStartEndDates";
 const fieldName = "date";

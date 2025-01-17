@@ -10,7 +10,7 @@ import { TextInput } from "@/components/molecules/text-input";
 import type { FormFieldGroup } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { useMemo, useState } from "react";
-import type { CreateEventFormData } from "../create-event-form";
+import type { CreateEventFormData } from "../../templates/create-event-form";
 
 const groupName = "taxesFees";
 
