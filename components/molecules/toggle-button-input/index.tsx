@@ -24,7 +24,7 @@ const Inner = ({
   };
 
   return (
-    <InputContainer className="relative bg-primary/10 border border-primary/40 rounded-lg">
+    <InputContainer className="relative bg-primary/10 border border-primary/40 rounded-lg flex">
       <div
         className={twMerge(
           "absolute transition-transform h-full w-1/2 rounded-lg bg-primary -z-10",

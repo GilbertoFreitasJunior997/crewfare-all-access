@@ -19,7 +19,7 @@ export const ToggleButtonItem = ({
       type="button"
       onClick={handleSelect}
       className={twMerge(
-        "py-2 px-[29.5px] text-sm font-bold rounded-lg transition-colors duration-75",
+        "py-2 px-[29.5px] text-sm font-bold rounded-lg transition-colors duration-75 grow",
         isSelected ? "text-foreground" : "text-primary",
       )}
     >
