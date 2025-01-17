@@ -1,9 +1,7 @@
-import type { PropsWithChildren } from "react";
+import type { HasChildren, HasClassName } from "@/lib/types";
 import { twMerge } from "tailwind-merge";
 
-export type ContainerProps = PropsWithChildren & {
-  className?: string;
-};
+export type ContainerProps = HasChildren & HasClassName;
 
 export const Container = ({ className, children }: ContainerProps) => {
   return (
