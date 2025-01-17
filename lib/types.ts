@@ -13,3 +13,6 @@ export type HasClassName = {
    */
   className?: string;
 };
+
+// biome-ignore lint/suspicious/noExplicitAny: helper type
+export type AnyObject = Record<string, any>;

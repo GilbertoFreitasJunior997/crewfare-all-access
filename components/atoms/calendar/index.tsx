@@ -5,7 +5,6 @@ import { twMerge } from "tailwind-merge";
 export const Calendar = (props: DayPickerProps) => {
   return (
     <DayPicker
-      autoFocus={true}
       showOutsideDays={true}
       className="p-3"
       classNames={{
@@ -19,10 +18,15 @@ export const Calendar = (props: DayPickerProps) => {
         weekday: "text-placeholder w-8 font-normal text-[0.8rem]",
         week: "flex w-full mt-1",
         day_button: "text-sm",
-        day: "size-8 flex items-center justify-center fist:rounded-l-md last:rounded-r-md",
+        day: twMerge(
+          "size-8 flex items-center justify-center",
+          props.mode === "single"
+            ? "rounded-md"
+            : "first:rounded-l-md last:rounded-r-md",
+        ),
         range_start: "day-range-start rounded-none rounded-s-md",
         range_middle:
-          "aria-selected:bg-background/50 aria-selected:text-accent-foreground rounded-none",
+          "aria-selected:bg-background/40 aria-selected:text-accent-foreground rounded-none",
         range_end: "day-range-end rounded-none rounded-e-md",
         selected: "bg-primary",
         today: "bg-background rounded-md",
