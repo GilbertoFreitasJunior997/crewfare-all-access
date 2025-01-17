@@ -19,7 +19,7 @@ const meta: Meta<typeof BannerInput> = {
     docs: {
       description: {
         component:
-          "(Must be a controlled input) - The BannerInput component allows the user to upload an image (JPEG or PNG) as a banner. It also displays the uploaded image or a fallback message with drag-and-drop support. It includes visual feedback for valid or invalid inputs and supports custom text to be shown on the banner.",
+          "The BannerInput component allows the user to upload an image (JPEG or PNG) as a banner. It also displays the uploaded image or a fallback message with drag-and-drop support. It includes visual feedback for valid or invalid inputs and supports custom text to be shown on the banner.",
       },
     },
   },
@@ -34,11 +34,14 @@ export const Default: Story = {
     const [value, setValue] = useState<BannerInputValue>();
 
     return (
-      <BannerInput
-        {...args}
-        value={value}
-        onChange={(val) => setValue(val ?? undefined)}
-      />
+      <>
+        <p>(Must be controlled without form)</p>
+        <BannerInput
+          {...args}
+          value={value}
+          onChange={(val) => setValue(val ?? undefined)}
+        />
+      </>
     );
   },
 };
