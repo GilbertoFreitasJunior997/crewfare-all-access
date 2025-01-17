@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { BasicInformationStep } from ".";
 
 const meta: Meta<typeof BasicInformationStep> = {
-  title: "Design System/Template/BasicInformationStep",
+  title: "Design System/Templates/BasicInformationStep",
   component: BasicInformationStep,
   decorators: [
     (Story) => {
