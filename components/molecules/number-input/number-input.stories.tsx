@@ -57,8 +57,10 @@ export const Default: Story = {
   },
   parameters: {
     docs: {
-      storyDescription:
-        "Uses local state to control the value of the NumberInput and displays it as text.",
+      description: {
+        story:
+          "Uses local state to control the value of the NumberInput and displays it as text.",
+      },
     },
   },
 };
@@ -83,8 +85,10 @@ export const WithSuffix: Story = {
   },
   parameters: {
     docs: {
-      storyDescription:
-        "Demonstrates the NumberInput with a suffix, which appears next to the value when the input is not focused.",
+      description: {
+        story:
+          "Demonstrates the NumberInput with a suffix, which appears next to the value when the input is not focused.",
+      },
     },
   },
 };
@@ -110,8 +114,10 @@ export const WithMinValue: Story = {
   },
   parameters: {
     docs: {
-      storyDescription:
-        "Shows how the NumberInput works with a minimum value, preventing the user from entering a number below the specified value.",
+      description: {
+        story:
+          "Shows how the NumberInput works with a minimum value, preventing the user from entering a number below the specified value.",
+      },
     },
   },
 };
@@ -127,8 +133,10 @@ export const WithForm: Story = {
   ),
   parameters: {
     docs: {
-      storyDescription:
-        "Shows how the NumberInput works within a form context with validation enabled.",
+      description: {
+        story:
+          "Shows how the NumberInput works within a form context with validation enabled.",
+      },
     },
   },
 };

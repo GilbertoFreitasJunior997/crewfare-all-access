@@ -42,8 +42,10 @@ type Story = StoryObj<typeof CheckboxInput>;
 export const Default: Story = {
   parameters: {
     docs: {
-      storyDescription:
-        "Displays the checkbox with the label 'Accept Terms' and allows toggling.",
+      description: {
+        story:
+          "Displays the checkbox with the label 'Accept Terms' and allows toggling.",
+      },
     },
   },
 };
@@ -65,8 +67,10 @@ export const Controlled: Story = {
   },
   parameters: {
     docs: {
-      storyDescription:
-        "Uses local state to control the checkbox value and display it as text.",
+      description: {
+        story:
+          "Uses local state to control the checkbox value and display it as text.",
+      },
     },
   },
 };
@@ -82,8 +86,10 @@ export const WithForm: Story = {
   ),
   parameters: {
     docs: {
-      storyDescription:
-        "Demonstrates how the CheckboxInput can be used inside a form context with required validation enabled.",
+      description: {
+        story:
+          "Demonstrates how the CheckboxInput can be used inside a form context with required validation enabled.",
+      },
     },
   },
 };

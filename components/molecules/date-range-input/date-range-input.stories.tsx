@@ -59,8 +59,10 @@ export const Default: Story = {
   },
   parameters: {
     docs: {
-      storyDescription:
-        "Uses local state to control the selected date range and displays it as text.",
+      description: {
+        story:
+          "Uses local state to control the selected date range and displays it as text.",
+      },
     },
   },
 };
@@ -76,8 +78,10 @@ export const WithForm: Story = {
   ),
   parameters: {
     docs: {
-      storyDescription:
-        "Demonstrates how the DateRangeInput can be used inside a form context with required validation enabled.",
+      description: {
+        story:
+          "Demonstrates how the DateRangeInput can be used inside a form context with required validation enabled.",
+      },
     },
   },
 };
