@@ -1,7 +1,5 @@
 import { FormProvider } from "@/components/atoms/form-provider";
-import { StepperProvider } from "@/components/atoms/stepper-provider";
 import { useForm } from "@/hooks/use-form";
-import { steps } from "@/lib/steps";
 import type { Meta, StoryObj } from "@storybook/react";
 import { addDays } from "date-fns";
 import { EventStartEndDates } from ".";
@@ -15,9 +13,7 @@ const meta: Meta<typeof EventStartEndDates> = {
 
       return (
         <FormProvider form={form}>
-          <StepperProvider steps={steps}>
-            <Story />
-          </StepperProvider>
+          <Story />
         </FormProvider>
       );
     },
