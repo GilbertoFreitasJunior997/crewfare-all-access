@@ -8,6 +8,7 @@ export const AlertIcon = ({ className, fill = "#E74C3C" }: IconCustomProps) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    role="img"
   >
     <rect
       width="16"
