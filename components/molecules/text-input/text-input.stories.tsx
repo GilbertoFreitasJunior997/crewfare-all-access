@@ -42,8 +42,10 @@ export const Default: Story = {
   },
   parameters: {
     docs: {
-      storyDescription:
-        "TextInput component in uncontrolled mode, using a default value without external state management.",
+      description: {
+        story:
+          "TextInput component in uncontrolled mode, using a default value without external state management.",
+      },
     },
   },
 };
@@ -65,8 +67,10 @@ export const Controlled: Story = {
   },
   parameters: {
     docs: {
-      storyDescription:
-        "Demonstrates the TextInput component in controlled mode, where the state is managed by a parent component.",
+      description: {
+        story:
+          "Demonstrates the TextInput component in controlled mode, where the state is managed by a parent component.",
+      },
     },
   },
 };
@@ -84,8 +88,10 @@ export const WithForm: Story = {
   ],
   parameters: {
     docs: {
-      storyDescription:
-        "Demonstrates the TextInput component used inside a form context with validation enabled.",
+      description: {
+        story:
+          "Demonstrates the TextInput component used inside a form context with validation enabled.",
+      },
     },
   },
 };
