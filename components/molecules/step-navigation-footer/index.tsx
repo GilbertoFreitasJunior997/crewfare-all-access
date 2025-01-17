@@ -4,10 +4,8 @@ import { Button } from "@/components/atoms/button";
 import type { FormBase, FormErrors } from "@/hooks/use-form";
 import { useFormProvider } from "@/hooks/use-form-provider";
 import { useStepper } from "@/hooks/use-stepper";
-import { motion } from "framer-motion";
 import { useState } from "react";
-
-const stepNavigationFooterSaveAnimationMs = 100;
+import { SaveButton, saveButtonAnimationDurationMs } from "../save-button";
 
 export type StepNavigationFooterProps<TForm extends FormBase> = {
   onSuccess?: (data: TForm) => void;
@@ -32,7 +30,7 @@ export const StepNavigationFooter = <TForm extends FormBase>({
     setIsButtonShaking(true);
     setTimeout(() => {
       setIsButtonShaking(false);
-    }, stepNavigationFooterSaveAnimationMs);
+    }, saveButtonAnimationDurationMs);
 
     onError?.(errors);
   };
@@ -58,19 +56,10 @@ export const StepNavigationFooter = <TForm extends FormBase>({
         </Button>
       </div>
 
-      <motion.div
-        animate={{
-          x: isButtonShaking ? [0, -8, 16, -16, 0] : 0,
-        }}
-        transition={{ duration: stepNavigationFooterSaveAnimationMs / 1000 }}
-      >
-        <Button
-          type="submit"
-          onClick={handleSubmit(onSuccess, handleError)}
-        >
-          Save
-        </Button>
-      </motion.div>
+      <SaveButton
+        isShaking={isButtonShaking}
+        onClick={handleSubmit(onSuccess, handleError)}
+      />
     </section>
   );
 };
