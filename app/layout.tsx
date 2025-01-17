@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import type { PropsWithChildren } from "react";
 import "./globals.css";
 import { Toaster } from "@/components/atoms/toaster";
 import { Header } from "@/components/molecules/header";
 import { LayoutProviders } from "@/components/molecules/layout-providers";
+import type { HasChildren } from "@/lib/types";
 
 const poppins = Poppins({
   variable: "--font-geist-sans",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "Manage your events",
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({ children }: HasChildren) {
   return (
     <html lang="en">
       <body

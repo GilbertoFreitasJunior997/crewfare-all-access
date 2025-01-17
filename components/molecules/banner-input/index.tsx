@@ -10,6 +10,7 @@ import {
   type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { useFormProvider } from "@/hooks/use-form-provider";
+import type { HasClassName } from "@/lib/types";
 import { LoaderCircleIcon } from "lucide-react";
 import { memo, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -126,11 +127,11 @@ const Inner = ({
   );
 };
 
-export type BannerInputProps = InputBase<BannerInputValue | null> & {
-  className?: string;
-  text?: string;
-  showText?: boolean;
-};
+export type BannerInputProps = InputBase<BannerInputValue | null> &
+  HasClassName & {
+    text?: string;
+    showText?: boolean;
+  };
 export const BannerInput = memo((props: BannerInputProps) => (
   <InputProvider
     {...props}

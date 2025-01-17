@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  type FC,
-  type PropsWithChildren,
-  createContext,
-  useCallback,
-  useState,
-} from "react";
+import type { HasChildren } from "@/lib/types";
+import { type FC, createContext, useCallback, useState } from "react";
 
 export type Step = {
   name: string;
@@ -28,7 +23,7 @@ export type StepperContextValue = {
 };
 export const StepperContext = createContext({} as StepperContextValue);
 
-export type StepperProviderProps = PropsWithChildren & {
+export type StepperProviderProps = HasChildren & {
   steps: Step[];
 };
 

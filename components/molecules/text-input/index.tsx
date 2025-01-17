@@ -6,11 +6,10 @@ import {
   type InputBase,
   InputProvider,
 } from "@/components/atoms/input-provider";
+import type { HasClassName } from "@/lib/types";
 import { type ChangeEvent, memo } from "react";
 
-export type TextInputProps = InputBase<string> & {
-  className?: string;
-};
+export type TextInputProps = InputBase<string> & HasClassName;
 
 export const TextInput = memo(({ className, ...props }: TextInputProps) => (
   <InputProvider

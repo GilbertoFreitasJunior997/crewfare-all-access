@@ -8,6 +8,7 @@ import {
   type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
 import { SelectInputItem } from "@/components/atoms/select-input-item";
+import type { HasClassName } from "@/lib/types";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { type ComponentRef, memo, useRef } from "react";
@@ -85,10 +86,10 @@ const Inner = ({
   );
 };
 
-export type SelectInputProps = InputBase<SelectInputItem | undefined> & {
-  items: SelectInputItem[];
-  className?: string;
-};
+export type SelectInputProps = InputBase<SelectInputItem | undefined> &
+  HasClassName & {
+    items: SelectInputItem[];
+  };
 
 export const SelectInput = memo((props: SelectInputProps) => (
   <InputProvider

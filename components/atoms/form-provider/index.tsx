@@ -1,7 +1,8 @@
 "use client";
 
 import type { Form, FormBase } from "@/hooks/use-form";
-import { type PropsWithChildren, createContext } from "react";
+import type { HasChildren, HasClassName } from "@/lib/types";
+import { createContext } from "react";
 
 export type FormContextValues<
   TForm extends FormBase = FormBase,
@@ -14,10 +15,7 @@ export const FormContext = createContext({} as FormContextValues);
 export type FormProviderProps<
   TForm extends FormBase = FormBase,
   TGroup extends string = string,
-> = PropsWithChildren &
-  FormContextValues<TForm, TGroup> & {
-    className?: string;
-  };
+> = FormContextValues<TForm, TGroup> & HasClassName & HasChildren;
 
 export const FormProvider = <
   TForm extends FormBase = FormBase,

@@ -4,13 +4,13 @@ import {
   type InputBase,
   InputProvider,
 } from "@/components/atoms/input-provider";
+import type { HasClassName } from "@/lib/types";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { memo } from "react";
 import { twMerge } from "tailwind-merge";
 
-export type CheckboxInputProps = InputBase<boolean> & {
-  className?: string;
-};
+export type CheckboxInputProps = InputBase<boolean> & HasClassName;
+
 export const CheckboxInput = memo(
   ({ className, ...props }: CheckboxInputProps) => (
     <InputProvider

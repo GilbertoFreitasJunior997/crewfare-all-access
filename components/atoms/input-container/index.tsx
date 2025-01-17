@@ -1,9 +1,7 @@
-import type { PropsWithChildren } from "react";
+import type { HasChildren, HasClassName } from "@/lib/types";
 import { InputError } from "../input-error";
 
-export type InputContainerProps = PropsWithChildren & {
-  className?: string;
-};
+export type InputContainerProps = HasChildren & HasClassName;
 
 export const InputContainer = ({
   className,

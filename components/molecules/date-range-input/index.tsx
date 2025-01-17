@@ -11,6 +11,7 @@ import {
 } from "@/components/atoms/input-provider";
 import { Popover } from "@/components/atoms/popover";
 import { useFormProvider } from "@/hooks/use-form-provider";
+import type { HasClassName } from "@/lib/types";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
 import { type ComponentRef, memo, useRef } from "react";
@@ -89,10 +90,10 @@ const Inner = ({
   );
 };
 
-export type DateRangeInputProps = InputBase<DateRangeInputValue> & {
-  className?: string;
-  disabled?: DateInterval;
-};
+export type DateRangeInputProps = InputBase<DateRangeInputValue> &
+  HasClassName & {
+    disabled?: DateInterval;
+  };
 export const DateRangeInput = memo((props: DateRangeInputProps) => (
   <InputProvider
     {...props}

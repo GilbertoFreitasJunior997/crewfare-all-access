@@ -7,6 +7,7 @@ import {
   InputProvider,
   type InputProviderRenderProps,
 } from "@/components/atoms/input-provider";
+import type { HasClassName } from "@/lib/types";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { type ChangeEvent, memo, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -104,12 +105,12 @@ const Inner = ({
   );
 };
 
-export type NumberInputProps = InputBase<number> & {
-  className?: string;
-  suffix?: string;
-  allowIntegersOnly?: boolean;
-  min?: number;
-};
+export type NumberInputProps = InputBase<number> &
+  HasClassName & {
+    suffix?: string;
+    allowIntegersOnly?: boolean;
+    min?: number;
+  };
 export const NumberInput = memo((props: NumberInputProps) => (
   <InputProvider
     {...props}

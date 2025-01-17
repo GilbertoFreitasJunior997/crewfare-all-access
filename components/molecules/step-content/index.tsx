@@ -4,9 +4,9 @@ import { AlertIcon } from "@/components/atoms/alert-icon";
 import { StepProvider } from "@/components/atoms/step-provider";
 import type { Step } from "@/components/atoms/stepper-provider";
 import { useStepper } from "@/hooks/use-stepper";
-import type { PropsWithChildren } from "react";
+import type { HasChildren } from "@/lib/types";
 
-export type StepContentProps = PropsWithChildren & {
+export type StepContentProps = HasChildren & {
   step: Step;
 };
 
