@@ -61,9 +61,19 @@
 			"enabled": true,
 			"indentStyle": "space",
 			"attributePosition": "multiline"
-		}
+		},
+		"globals": [
+			"describe",
+			"it",
+			"expect",
+			"jest",
+			"beforeAll",
+			"beforeEach",
+			"afterAll",
+			"afterEach"
+		]
 	},
 	"files": {
-		"ignore": ["node_modules/*", ".next/*"]
+		"ignore": [".next/*", "node_modules", "coverage", "dist", "build"]
 	}
 }
