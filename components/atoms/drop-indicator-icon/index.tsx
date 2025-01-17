@@ -11,6 +11,7 @@ export const DropIndicatorIcon = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    role="img"
   >
     <path
       opacity="0.4"
