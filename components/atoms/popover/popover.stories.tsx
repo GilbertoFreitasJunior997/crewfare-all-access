@@ -31,4 +31,4 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const PopoverDemo: Story = {};
+export const Default: Story = {};
