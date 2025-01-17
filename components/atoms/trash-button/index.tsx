@@ -1,10 +1,9 @@
+import type { HasClassName } from "@/lib/types";
 import { Trash2Icon } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import type { ButtonProps } from "../button";
 
-export type TrashButtonProps = {
-  className?: string;
-  onClick?: () => void;
-};
+export type TrashButtonProps = HasClassName & Pick<ButtonProps, "onClick">;
 
 export const TrashButton = ({ className, onClick }: TrashButtonProps) => {
   return (
