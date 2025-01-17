@@ -72,7 +72,7 @@ const Inner = ({
           </Button>
         </Popover.Trigger>
 
-        <Popover.Content>
+        <Popover.Content className="p-0">
           <Calendar
             defaultMonth={value?.from}
             selected={value}
