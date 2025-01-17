@@ -11,6 +11,7 @@ export const ArrowLeftIcon = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    role="img"
   >
     <path
       d="M6 1L1.2 7L6 13"
