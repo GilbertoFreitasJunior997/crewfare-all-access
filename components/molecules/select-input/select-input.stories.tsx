@@ -122,7 +122,11 @@ export const WithForm: Story = {
     isRequired: true,
   },
   decorators: [
-    (Story) => <InputStoriesWrapper>{<Story />}</InputStoriesWrapper>,
+    (Story) => (
+      <InputStoriesWrapper>
+        <Story />
+      </InputStoriesWrapper>
+    ),
   ],
   parameters: {
     docs: {
