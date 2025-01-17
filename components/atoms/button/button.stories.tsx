@@ -64,10 +64,17 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {};
-
 export const Secondary: Story = {
   args: {
     variant: "secondary",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This secondary button variant is ideal for less prominent actions. It has a more subdued visual style compared to the primary variant.",
+      },
+    },
   },
 };
 
@@ -80,10 +87,26 @@ export const Icon: Story = {
   argTypes: {
     children: { control: false },
   },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This button variant uses an icon in place of text. It's great for compact actions, like navigation buttons, with the 'icon' size style applied.",
+      },
+    },
+  },
 };
 
 export const Disabled: Story = {
   args: {
     isDisabled: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This disabled button cannot be interacted with and is styled with a subdued look to indicate its disabled state.",
+      },
+    },
   },
 };
