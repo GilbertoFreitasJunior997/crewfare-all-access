@@ -18,8 +18,8 @@ describe("Popover", () => {
         </Popover.Content>
       </Popover.Root>,
     );
-  });
 
-  const trigger = screen.getByRole("button");
-  expect(trigger).toBeInTheDocument();
+    const trigger = screen.getByRole("button");
+    expect(trigger).toBeInTheDocument();
+  });
 });
