@@ -1,6 +1,7 @@
 import type { InputBase } from "@/components/atoms/input-provider";
 import type { Meta } from "@storybook/react";
 import type { FC } from "react";
+import type { IconCustomProps } from "../types";
 
 export const inputBaseMeta = {
   args: {
@@ -69,3 +70,18 @@ export const inputBaseMeta = {
   },
   // biome-ignore lint/suspicious/noExplicitAny: this can be for any input
 } satisfies Meta<FC<InputBase<any>>>;
+
+export const iconMeta = {
+  argTypes: {
+    className: {
+      control: {
+        type: "text",
+      },
+    },
+    fill: {
+      control: {
+        type: "color",
+      },
+    },
+  },
+} satisfies Meta<FC<IconCustomProps>>;

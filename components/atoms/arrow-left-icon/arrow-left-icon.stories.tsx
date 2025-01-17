@@ -1,9 +1,11 @@
+import { iconMeta } from "@/lib/stories/utils";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ArrowLeftIcon } from ".";
 
 const meta: Meta<typeof ArrowLeftIcon> = {
   title: "Design System/Atoms/ArrowLeftIcon",
   component: ArrowLeftIcon,
+  ...iconMeta,
   parameters: {
     docs: {
       description: {

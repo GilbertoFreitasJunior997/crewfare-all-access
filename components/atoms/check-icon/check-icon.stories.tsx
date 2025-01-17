@@ -1,3 +1,4 @@
+import { iconMeta } from "@/lib/stories/utils";
 import type { Meta, StoryObj } from "@storybook/react";
 import { CheckIcon } from ".";
 
@@ -7,18 +8,7 @@ const meta: Meta<typeof CheckIcon> = {
   args: {
     fill: "green",
   },
-  argTypes: {
-    fill: {
-      control: {
-        type: "color",
-      },
-    },
-    className: {
-      control: {
-        disable: true,
-      },
-    },
-  },
+  ...iconMeta,
   parameters: {
     docs: {
       description: {

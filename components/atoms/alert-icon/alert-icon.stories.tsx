@@ -1,16 +1,11 @@
+import { iconMeta } from "@/lib/stories/utils";
 import type { Meta, StoryObj } from "@storybook/react";
 import { AlertIcon } from ".";
 
 const meta: Meta<typeof AlertIcon> = {
   title: "Design System/Atoms/AlertIcon",
   component: AlertIcon,
-  argTypes: {
-    className: {
-      control: {
-        disable: true,
-      },
-    },
-  },
+  ...iconMeta,
   parameters: {
     docs: {
       description: {
