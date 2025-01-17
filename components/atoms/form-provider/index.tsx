@@ -1,25 +1,34 @@
 "use client";
 
-import type { Form } from "@/hooks/use-form";
+import type { Form, FormBase } from "@/hooks/use-form";
 import { type PropsWithChildren, createContext } from "react";
 
-export type FormContextValues = {
-  form: Form;
+export type FormContextValues<
+  TForm extends FormBase = FormBase,
+  TGroup extends string = string,
+> = {
+  form: Form<TForm, TGroup>;
 };
 export const FormContext = createContext({} as FormContextValues);
 
-export type FormProviderProps = PropsWithChildren &
-  FormContextValues & {
+export type FormProviderProps<
+  TForm extends FormBase = FormBase,
+  TGroup extends string = string,
+> = PropsWithChildren &
+  FormContextValues<TForm, TGroup> & {
     className?: string;
   };
 
-export const FormProvider = ({
+export const FormProvider = <
+  TForm extends FormBase = FormBase,
+  TGroup extends string = string,
+>({
   form,
   className,
   children,
-}: FormProviderProps) => {
+}: FormProviderProps<TForm, TGroup>) => {
   return (
-    <FormContext value={{ form }}>
+    <FormContext value={{ form: form as Form }}>
       <form
         className={className}
         noValidate={true}
